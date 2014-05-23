@@ -1,4 +1,4 @@
 package com.xml2code.core.definition;
 
-public class Class {
+public class ProjectDef {
 }

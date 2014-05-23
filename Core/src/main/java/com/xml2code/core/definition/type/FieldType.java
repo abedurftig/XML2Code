@@ -1,6 +1,6 @@
 package com.xml2code.core.definition.type;
 
-import com.xml2code.core.definition.Field;
+import com.xml2code.core.definition.FieldDef;
 import com.xml2code.core.exception.UnsupportedFieldTypeException;
 
 public enum FieldType {
@@ -14,7 +14,7 @@ public enum FieldType {
 	datetime,
 	id;
 
-	public static String getType(Field field) throws UnsupportedFieldTypeException {
+	public static String getType(FieldDef field) throws UnsupportedFieldTypeException {
 
 		FieldType type = field.getFieldType();
 
