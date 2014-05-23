@@ -1,0 +1,36 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+		   targetNamespace="http://www.XML2Code.com/definition"
+		   xmlns:db="http://www.XML2Code.com/definition"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+	<xs:simpleType name="databaseType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="h2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:element name="Project">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="GenerationInstructions" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute type="xs:boolean" name="createJava" use="required"/>
+                                <xs:attribute type="xs:boolean" name="createRelationalMapping" use="required"/>
+                                <xs:attribute type="xs:boolean" name="createApi" use="required"/>
+                                <xs:attribute type="xs:boolean" name="createValidation" use="required"/>
+                                <xs:attribute type="xs:boolean" name="createWeb" use="required"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="projectName" use="required"/>
+            <xs:attribute type="xs:string" name="targetDir" use="optional"/>
+            <xs:attribute type="xs:string" name="rootPackage" use="required"/>
+            <xs:attribute type="db:databaseType" name="database" use="required"/>
+        </xs:complexType>
+    </xs:element>
+	
+</xs:schema>

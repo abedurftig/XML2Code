@@ -1,0 +1,63 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" 
+		   targetNamespace="http://www.XML2Code.com/definition"
+		   xmlns:types="http://www.XML2Code.com/definition"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema">	
+	
+	<xs:simpleType name="fieldType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="integer"/>
+			<xs:enumeration value="decimal"/>
+			<xs:enumeration value="bit"/>
+			<xs:enumeration value="text"/>
+			<xs:enumeration value="shorttext"/>
+			<xs:enumeration value="date"/>
+            <xs:enumeration value="datetime"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:element name="Class">
+    	<xs:complexType>
+      		<xs:sequence>
+        		<xs:element name="Field" maxOccurs="unbounded" minOccurs="0">
+          			<xs:complexType>
+            			<xs:simpleContent>
+              				<xs:extension base="xs:string">
+                				<xs:attribute type="xs:string" name="fieldName" use="required"/>
+                				<xs:attribute type="types:fieldType" name="fieldType" use="required"/>
+                				<xs:attribute type="xs:string" name="required" use="required"/>
+              				</xs:extension>
+            			</xs:simpleContent>
+          			</xs:complexType>
+        		</xs:element>
+				<xs:element name="Reference" maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute type="xs:string" name="referenceName" use="required"/>
+								<xs:attribute type="xs:string" name="referenceType" use="required"/>
+								<xs:attribute type="xs:string" name="required" use="required"/>
+								<xs:attribute type="xs:boolean" name="owner" use="optional"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="List" maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute type="xs:string" name="listName" use="required"/>
+								<xs:attribute type="xs:string" name="itemType" use="required"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+      		</xs:sequence>
+      		<xs:attribute type="xs:string" name="className" use="required"/>
+      		<xs:attribute type="xs:boolean" name="exportable" use="optional"/>
+      		<xs:attribute type="xs:string" name="superClass" use="optional"/>
+      		<xs:attribute type="xs:string" name="description" use="optional"/>
+      		<xs:attribute type="xs:string" name="displayName" use="optional"/>
+    	</xs:complexType>
+  	</xs:element>
+	
+</xs:schema>
