@@ -11,7 +11,7 @@ public class ProjectXMLValidator extends XMLValidator implements IProjectXMLVali
 
 	public void validateProjectXML(File projectXml) throws XMLValidationException {
 
-		InputStream isSchema = ResourceUtil.getInputStream("/xml-schemas/project-definition.xsd");
+		InputStream isSchema = ResourceUtil.getInputStream("/xsd/project-definition.xsd");
 		validateXMLAgainstSchema(projectXml, isSchema, XMLValidator.PROJECT_VALIDATION_MODE);
 
 	}

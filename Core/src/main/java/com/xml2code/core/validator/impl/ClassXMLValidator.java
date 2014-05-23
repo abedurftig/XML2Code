@@ -11,7 +11,7 @@ public class ClassXMLValidator extends XMLValidator implements IClassXMLValidato
 
 	public void validateClassXML(File classXml) throws XMLValidationException {
 
-		InputStream isSchema = ResourceUtil.getInputStream("/xml-schemas/class-definition.xsd");
+		InputStream isSchema = ResourceUtil.getInputStream("/xsd/class-definition.xsd");
 		validateXMLAgainstSchema(classXml, isSchema, XMLValidator.CLASS_VALIDATION_MODE);
 
 	}
