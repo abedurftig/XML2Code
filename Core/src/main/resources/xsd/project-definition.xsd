@@ -12,15 +12,15 @@
 	<xs:element name="Project">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="GenerationInstructions" minOccurs="1" maxOccurs="1">
+                <xs:element name="Instructions" minOccurs="1" maxOccurs="1">
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="xs:string">
-                                <xs:attribute type="xs:boolean" name="createJava" use="required"/>
-                                <xs:attribute type="xs:boolean" name="createRelationalMapping" use="required"/>
-                                <xs:attribute type="xs:boolean" name="createApi" use="required"/>
-                                <xs:attribute type="xs:boolean" name="createValidation" use="required"/>
-                                <xs:attribute type="xs:boolean" name="createWeb" use="required"/>
+                                <xs:attribute type="xs:boolean" name="generateJava" use="required"/>
+                                <xs:attribute type="xs:boolean" name="generateRelationalMapping" use="required"/>
+                                <xs:attribute type="xs:boolean" name="generateApi" use="required"/>
+                                <xs:attribute type="xs:boolean" name="generateValidation" use="required"/>
+                                <xs:attribute type="xs:boolean" name="generateWeb" use="required"/>
                             </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>
