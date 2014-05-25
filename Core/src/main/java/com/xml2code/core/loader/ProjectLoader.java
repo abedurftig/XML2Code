@@ -6,10 +6,12 @@ import org.apache.log4j.Logger;
 
 import com.xml2code.core.definition.ClassDefinition;
 import com.xml2code.core.definition.ProjectDefinition;
+import com.xml2code.core.exception.InvalidModelException;
 import com.xml2code.core.exception.ProjectLoadFailedException;
 import com.xml2code.core.exception.XMLParseException;
 import com.xml2code.core.exception.XMLValidationException;
 import com.xml2code.core.factory.ValidatorFactory;
+import com.xml2code.core.model.ModelFinalizer;
 import com.xml2code.core.parser.IClassXMLParser;
 import com.xml2code.core.parser.IProjectXMLParser;
 import com.xml2code.core.parser.impl.ClassXMLParser;
@@ -17,6 +19,7 @@ import com.xml2code.core.parser.impl.ProjectXMLParser;
 import com.xml2code.core.util.LoggerUtil;
 import com.xml2code.core.util.PropertiesUtil;
 import com.xml2code.core.validator.IClassXMLValidator;
+import com.xml2code.core.validator.IProjectDefinitionValidator;
 import com.xml2code.core.validator.IProjectXMLValidator;
 import com.xml2code.core.xml.XMLFileFilter;
 
@@ -57,9 +60,15 @@ public class ProjectLoader {
 		
 		projectDef = parseProjectDefinition(projectXmlFile, classXmlFiles);
 		
-		// finalize the model
+		ModelFinalizer.determineRelationships(projectDef);
 		
 		// validate the project and class model integrity
+		
+		validateProjectModelIntegrity(projectDef);
+		
+		// finalize the model
+		
+		ModelFinalizer.finalize(projectDef);
 		
 		return projectDef;
 		
@@ -160,6 +169,22 @@ public class ProjectLoader {
     	}
     	
     	return projectDef;
+    	
+    }
+    
+    private static void validateProjectModelIntegrity(ProjectDefinition projectDef) throws ProjectLoadFailedException {
+    	
+    	IProjectDefinitionValidator projectValidator = ValidatorFactory.getProjectDefValidator();
+    	
+    	try {
+    		
+			projectValidator.validateClassModelIntegrity(projectDef);
+			
+		} catch (InvalidModelException ime) {
+			
+			throw new ProjectLoadFailedException(ime);
+			
+		}
     	
     }
 	

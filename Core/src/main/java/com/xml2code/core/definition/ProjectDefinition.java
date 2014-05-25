@@ -48,8 +48,6 @@ public class ProjectDefinition {
 	 */
 	private InstructionsDef instructions;
 	
-	private boolean modelIsFinal = false;
-	
 	/**
 	 * Constructor
 	 * 
@@ -110,13 +108,6 @@ public class ProjectDefinition {
 	 */
 	public void setInstructions(InstructionsDef instructions) {
 		this.instructions = instructions;
-	}
-
-	/**
-	 * @return the modelIsFinal
-	 */
-	public boolean isModelIsFinal() {
-		return modelIsFinal;
 	}
 
 	/**

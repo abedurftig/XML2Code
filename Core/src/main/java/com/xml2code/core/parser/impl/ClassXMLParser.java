@@ -73,6 +73,11 @@ public class ClassXMLParser implements IClassXMLParser {
 			classDef = new ClassDefinition(projectDef, className, superClassName, classDescription, exportable);
 			classDef.setDisplayName(displayName);
 			
+			String fileName = classXml.getName();
+			if (!(classDef.getClassName() + ".xml").equalsIgnoreCase(fileName)) {
+				throw new XMLParseException("The name of the file '"+ fileName +"' does not match the class name defined in the XML file.");
+			}
+			
 			parseFieldDefinitions(classNode, classDef);
 			parseReferenceDefinitions(classNode, classDef);
 			parseListDefinitions(classNode, classDef);

@@ -202,44 +202,7 @@ public class ClassDefinition {
 	// ------------------------------------------
 	// Public methods
 	// ------------------------------------------
-	
-	/**
-	 * Checks whether or not this class definition has a decimal field.
-	 * 
-	 * @return true if the class definition contains at least field of type decimal
-	 */
-	public boolean hasDecimal() {
-		return hasFieldType(FieldType.decimal);
-	}
 
-	/**
-	 * Checks whether or not this class definition has a data field.
-	 * 
-	 * @return true if the class definition contains at least field of type data
-	 */
-	public boolean hasDate() {
-		return hasFieldType(FieldType.date);
-	}
-
-	/**
-	 * Checks whether or not this class definition has a reference to the specified type.
-	 * 
-	 * @param typeName the name of type in question
-	 * @return true if the class definition has a reference to the specified type
-	 */
-	public boolean hasReferenceToType(String typeName) {
-		return getReferenceOfType(typeName) != null;	
-	}
-	
-	/**
-	 * Checks whether or not this class definition has a super class defined.
-	 * 
-	 * @return true if the class definition has a super class defined
-	 */
-	public boolean hasSuperClass() {
-		return !superClassName.equals(DEFAULT_SUPERCLASS); 
-	}
-	
 	/**
 	 * Gets the reference to the specified type.
 	 * 
@@ -257,25 +220,7 @@ public class ClassDefinition {
 		return null;
 		
 	}
-
-	/**
-	 * Checks whether or not this class definition has a list of the specified type. 
-	 * 
-	 * @param typeName typeName the name of the type in question
-	 * @return true if the class definition has a list of the specified type
-	 */
-	public boolean hasListOfType(String typeName) {
-		
-		for (ListDefinition listDef : listDefinitions) {
-			if (listDef.getListItemType().equals(typeName)) {
-				return true;
-			}
-		}
-		
-		return false;
-		
-	}
-
+	
 	/**
 	 * Gets a list definition of the specified type.
 	 * 
@@ -322,6 +267,61 @@ public class ClassDefinition {
 		
 	}
 	
+	/**
+	 * Checks whether or not this class definition has a decimal field.
+	 * 
+	 * @return true if the class definition contains at least field of type decimal
+	 */
+	public boolean hasDecimal() {
+		return hasFieldType(FieldType.decimal);
+	}
+
+	/**
+	 * Checks whether or not this class definition has a data field.
+	 * 
+	 * @return true if the class definition contains at least field of type data
+	 */
+	public boolean hasDate() {
+		return hasFieldType(FieldType.date);
+	}
+
+	/**
+	 * Checks whether or not this class definition has a reference to the specified type.
+	 * 
+	 * @param typeName the name of type in question
+	 * @return true if the class definition has a reference to the specified type
+	 */
+	public boolean hasReferenceToType(String typeName) {
+		return getReferenceOfType(typeName) != null;	
+	}
+	
+	/**
+	 * Checks whether or not this class definition has a super class defined.
+	 * 
+	 * @return true if the class definition has a super class defined
+	 */
+	public boolean hasSuperClass() {
+		return !superClassName.equals(DEFAULT_SUPERCLASS); 
+	}
+
+	/**
+	 * Checks whether or not this class definition has a list of the specified type. 
+	 * 
+	 * @param typeName typeName the name of the type in question
+	 * @return true if the class definition has a list of the specified type
+	 */
+	public boolean hasListOfType(String typeName) {
+		
+		for (ListDefinition listDef : listDefinitions) {
+			if (listDef.getListItemType().equals(typeName)) {
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
+	
 	// ------------------------------------------
 	// Private methods
 	// ------------------------------------------
@@ -348,7 +348,7 @@ public class ClassDefinition {
 		
 		List<FieldDefinition> inheritedFields = new ArrayList<FieldDefinition>();
 		
-		if (superClassName != DEFAULT_SUPERCLASS) {
+		if (this.hasSuperClass()) {
 			
 			ClassDefinition superClass = projectDefinition.getClassDefinitionByName(superClassName);
 			inheritedFields.addAll(superClass.getInheritedFields());
@@ -365,10 +365,13 @@ public class ClassDefinition {
 		List<FieldDefinition> editableFields = new ArrayList<FieldDefinition>();
 		
 		for (FieldDefinition fieldDefinition : fieldDefinitions) {
-			if (!fieldDefinition.getFieldName().equals("id") &&
-				!fieldDefinition.getFieldName().equals("publicId")) {
+			
+			if (fieldDefinition.isEditable()) {
+				
 				editableFields.add(fieldDefinition);
+				
 			}
+			
 		}
 		
 		return editableFields;

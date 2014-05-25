@@ -29,7 +29,7 @@ public class ListDefinition {
 	/**
 	 * The relationship of this list to the owned entity.
 	 */
-	private RelationshipType relationship;
+	private RelationshipType relationshipType;
 	
 	/**
 	 * Constructor
@@ -42,7 +42,7 @@ public class ListDefinition {
 		this.listName = listName;
 		this.listItemType = listItemType;
 		this.unidirectional = false;
-		this.relationship = RelationshipType.oneToMany;
+		this.relationshipType = RelationshipType.oneToMany;
 		
 	}
 
@@ -89,17 +89,17 @@ public class ListDefinition {
 	}
 
 	/**
-	 * @return the relationship
+	 * @return the relationshipType
 	 */
-	public RelationshipType getRelationship() {
-		return relationship;
+	public RelationshipType getRelationshipType() {
+		return relationshipType;
 	}
 
 	/**
-	 * @param relationship the relationship to set
+	 * @param relationshipType the relationshipType to set
 	 */
-	public void setRelationship(RelationshipType relationship) {
-		this.relationship = relationship;
+	public void setRelationshipType(RelationshipType relationshipType) {
+		this.relationshipType = relationshipType;
 	}
 	
 }

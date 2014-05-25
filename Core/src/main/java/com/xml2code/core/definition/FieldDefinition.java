@@ -24,6 +24,8 @@ public class FieldDefinition {
 	 */
 	private boolean required;
 	
+	private boolean editable;
+	
 	
 	/**
 	 * Constructor
@@ -34,9 +36,24 @@ public class FieldDefinition {
 	 */
 	public FieldDefinition(String fieldName, FieldType fieldType, boolean required) {
 		
+		this(fieldName, fieldType, required, false);
+		
+	}
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param fieldName the name of the field
+	 * @param fieldType the type of the field
+	 * @param required whether or not this field is required
+	 * @param editable whether or not this field is editable
+	 */
+	public FieldDefinition(String fieldName, FieldType fieldType, boolean required, boolean editable) {
+		
 		this.fieldName = fieldName;
 		this.fieldType = fieldType;
 		this.required = required;
+		this.editable = editable;
 		
 	}
 	
@@ -65,6 +82,20 @@ public class FieldDefinition {
 		
 		return required;
 		
+	}
+
+	/**
+	 * @return the editable
+	 */
+	public boolean isEditable() {
+		return editable;
+	}
+
+	/**
+	 * @param editable the editable to set
+	 */
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 	
 }
