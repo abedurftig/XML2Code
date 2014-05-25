@@ -28,8 +28,7 @@
             </xs:sequence>
             <xs:attribute type="xs:string" name="projectName" use="required"/>
             <xs:attribute type="xs:string" name="targetDir" use="optional"/>
-            <xs:attribute type="xs:string" name="rootPackage" use="required"/>
-            <xs:attribute type="db:databaseType" name="database" use="required"/>
+            <xs:attribute type="db:databaseType" name="database" use="optional"/>
         </xs:complexType>
     </xs:element>
 	
