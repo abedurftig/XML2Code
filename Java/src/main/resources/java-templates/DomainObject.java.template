@@ -1,0 +1,204 @@
+package <<package>>;
+
+import java.util.Date;
+
+import javax.persistence.*;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import org.json.JSONObject;
+
+import xml2code.java.utils.json.DateTimeJsonDeserializer;
+import xml2code.java.utils.json.DateTimeJsonSerializer;
+
+import xml2code.java.utils.domain.IDomainObject;
+import xml2code.java.utils.json.IJSONObject;
+
+/**
+ *
+ * This class is the base class for all generated domain object classes.
+ *
+ * @author XML2Code
+ *
+ */
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class DomainObject implements IDomainObject, IJSONObject {
+
+	/**
+	 * The id
+	 */
+	@Id
+	@GeneratedValue(strategy = javax.persistence.GenerationType.TABLE)
+	@Column(name = "ID", unique = true, nullable = false)
+	private long id;
+
+	/**
+	 * The publicId
+	 */
+	@Column(name = "PUBLIC_ID", unique = true, nullable = false, length = 255)
+	private String publicId;
+	
+	/**
+	 * The clientId
+	 */
+	@Column(name = "CLIENT_ID", unique = true, nullable = true, length = 255)
+	private String clientId;
+	
+	/**
+	 * The time the object was first stored in the database.
+	 */
+	@JsonSerialize(using = DateTimeJsonSerializer.class)
+	@JsonDeserialize(using = DateTimeJsonDeserializer.class) 
+	@Column(name = "CREATE_TIME", unique = false, nullable = false)
+	private Date createTime;
+
+	/**
+	 * The time the object was updated in the database the last time.
+	 */
+	@JsonSerialize(using = DateTimeJsonSerializer.class)
+	@JsonDeserialize(using = DateTimeJsonDeserializer.class) 
+	@Column(name = "UPDATE_TIME", unique = false, nullable = false)
+	private Date updateTime;
+	
+	// Getters and Setters
+
+	/**
+	 * @return the id
+	 */
+	public long getId() {
+		return id;
+	}
+	
+	/**
+	 * @param id
+	 */
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	/**
+	 * @return the publicId
+	 */
+	public String getPublicId() {
+		return publicId;
+	}
+	
+	/**
+	 * @param publicId
+	 */
+	public void setPublicId(String publicId) {
+		this.publicId = publicId;
+	}
+	
+	/**
+	 * @return the clientId
+	 */
+	public String getClientId() {
+		return clientId;
+	}
+
+	/**
+	 * @param clientId the clientId to set
+	 */
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
+	
+	/**
+	 * @return the createTime
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	/**
+	 * @param createTime the createTime to set
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	/**
+	 * @return the updateTime
+	 */
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	/**
+	 * @param updateTime the updateTime to set
+	 */
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+	
+	// public methods
+
+	public void updateTimeStamps() {
+		Date now = new Date();
+		if (this.createTime == null) {
+			this.createTime = now;
+		}
+		this.updateTime = now;
+	}
+	
+	/**
+	 * Returns a JSON object representation of the current instance.
+	 * 
+	 * @return a JSON object representation of the current instance
+	 */
+	public JSONObject toJSONObject() {
+        return new JSONObject(toJSON());
+    }
+
+	/**
+	 * Returns a JSON String representation of the current instance.
+	 * 
+	 * @return a JSON String representation of the current instance
+	 */
+    public String toJSON() {
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+
+            String json = mapper.writeValueAsString(this);
+            return json;
+
+        } catch (Exception e) {
+			// TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Creates an instance of the specified class from the given JSON String. 
+     * The caller will have to cast the returned object to the specified class.
+     * 
+     * @param type the class of the returned object
+     * @param json the JSON String representation of the object
+     * @return an instance of the specified class
+     */
+	public static <T extends DomainObject> DomainObject fromJSON(Class<T> type, String json) {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		try {
+			
+			DomainObject obj = mapper.readValue(json, type);
+			return obj;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+}
