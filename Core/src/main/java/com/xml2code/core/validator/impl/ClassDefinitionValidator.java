@@ -23,7 +23,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 				// just double checking
 				if (refDef.isUnidirectional() && backRef != null) {
 					
-					throw new InvalidModelException(
+					throw new InvalidModelException(InvalidModelException.INVALID_BACK_REF,
 							"Unidirectional reference cannot have a back-reference [class: "
 									+ classDef.getClassName()
 									+ ", reference to: "
@@ -35,7 +35,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 				// just double checking
 				if (!refDef.isUnidirectional() && backRef == null) {
 					
-					throw new InvalidModelException(
+					throw new InvalidModelException(InvalidModelException.NO_BACK_REF,
 							"Bidirectional reference has no birectional back-reference [class: "
 									+ classDef.getClassName()
 									+ ", reference to: "
@@ -46,7 +46,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 
 				if (!refDef.isUnidirectional() && refDef.isOwner() && backRef.isOwner()) {
 					
-					throw new InvalidModelException(
+					throw new InvalidModelException(InvalidModelException.TWO_OWNERS,
 							"Not both sides of a relationship can be the owner [class: "
 									+ classDef.getClassName()
 									+ ", reference to: "
@@ -57,7 +57,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 
 				if (!refDef.isUnidirectional() && !refDef.isOwner() && !backRef.isOwner()) {
 					
-					throw new InvalidModelException(
+					throw new InvalidModelException(InvalidModelException.NO_OWNER,
 							"One side of a relationship must be the owner [class: "
 									+ classDef.getClassName()
 									+ ", reference to: "
@@ -74,7 +74,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 				// just double checking
 				if (listRef == null) {
 					
-					throw new InvalidModelException(
+					throw new InvalidModelException(InvalidModelException.NO_LIST,
 							"Reference has 'manyToOne' relationship to a class "
 									+ "which does not define a list of this type [class: "
 									+ classDef.getClassName()
@@ -86,7 +86,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 
 			} else {
 
-				throw new InvalidModelException( 
+				throw new InvalidModelException(InvalidModelException.INVALID_TYPE,
 						"Reference has the wrong relationship type [type: "
 								+ refDef.getRelationshipType()
 								+ ", references can only be 'oneToOne' or 'manyToOne'");

@@ -51,7 +51,7 @@ public class ProjectDefinitionValidator implements IProjectDefinitionValidator {
 							 	 "' does not exists but is required by the following classes " + 
 							 	 requiredTypes.get(requiredType).toString();
 				
-				throw new InvalidModelException(message);
+				throw new InvalidModelException(InvalidModelException.MISSING_DEPENDENCY, message);
 				
 			}
 			

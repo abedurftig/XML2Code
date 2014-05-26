@@ -35,7 +35,7 @@ public class ClassXMLParser implements IClassXMLParser {
 
 	private static final String XML_FIELD = "Field";
 	private static final String XML_FIELD_NAME = "fieldName";
-	private static final String XML_FIELD_TYPE = "FieldType";
+	private static final String XML_FIELD_TYPE = "fieldType";
 	
 	private static final String XML_REFERENCE = "Reference";
 	private static final String XML_REFERENCE_NAME = "referenceName";

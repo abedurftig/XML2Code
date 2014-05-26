@@ -114,7 +114,7 @@ public class ProjectLoader {
     	
     	File[] classXmlFiles = classesXml.listFiles(new XMLFileFilter());
 
-		if (classesXml.length() == 0) {
+		if (classXmlFiles.length == 0) {
 
 			LOGGER.error(ProjectLoadFailedException.NO_CLASS_DEF);
 			throw new ProjectLoadFailedException(ProjectLoadFailedException.NO_CLASS_DEF);

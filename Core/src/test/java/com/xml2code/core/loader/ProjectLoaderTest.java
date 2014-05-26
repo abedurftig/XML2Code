@@ -1,13 +1,18 @@
 package com.xml2code.core.loader;
 
-import com.xml2code.core.exception.ProjectLoadFailedException;
-import org.junit.Assert;
-import org.junit.Test;
-import util.TestResourceUtil;
-
 import java.io.File;
 import java.net.URISyntaxException;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import util.TestResourceUtil;
+
+import com.xml2code.core.exception.ProjectLoadFailedException;
+
+@RunWith(JUnit4.class)
 public class ProjectLoaderTest {
 
 	@Test
