@@ -4,7 +4,8 @@ public class ProjectLoadFailedException extends Exception {
 
 	public static final String NO_PROJECT = "Project definition does not exist!";
 	public static final String NO_CLASS_DEF_DIRECTORY = "Directory 'classes' does not exist!";
-	
+	public static final String NO_CLASS_DEF = "The project does not contain any class definitions!";
+
 	/**
 	 * 
 	 */

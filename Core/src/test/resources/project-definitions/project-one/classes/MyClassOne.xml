@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Class xmlns="http://www.XML2Code.com/definition"
+	className="MyClassOne"
+	description="This is a class"
+	superClass="">
+	
+	<Field
+		fieldName="FieldOne"
+		fieldType="text"
+		required="true"/>
+	<Field
+		fieldName="FieldTwo"
+		fieldType="shorttext"
+		required="false"/>
+	<Field
+		fieldName="FieldThree"
+		fieldType="bit"
+		required="false"/>
+	<Field
+		fieldName="FieldFour"
+		fieldType="integer"
+		required="false"/>
+	<Field
+		fieldName="FieldFive"
+		fieldType="decimal"
+		required="false"/>	
+		
+	<Reference
+		referenceName="ReferenceOne"
+		referenceType="MyClassTwo"
+		required="true"/>
+		
+	<List
+		listName="ListOne"
+        itemType="MyClassThree"/>
+	
+</Class>

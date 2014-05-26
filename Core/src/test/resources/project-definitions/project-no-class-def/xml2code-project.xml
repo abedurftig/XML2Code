@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Project xmlns="http://www.XML2Code.com/definition"
+        projectName="MyProject"
+        targetDir="/tmp"
+        database="h2">
+
+    <Instructions
+            generateApi="true"
+            generateJava="true"
+            generateRelationalMapping="true"
+            generateValidation="true"
+            generateWeb="true"/>
+
+</Project>

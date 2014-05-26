@@ -47,10 +47,11 @@ public class ProjectLoader {
 	public static ProjectDefinition loadProject(String projectFolder) throws ProjectLoadFailedException {
 		
 		ProjectDefinition projectDef = null;
-		
-		File projectXmlFile = new File(projectFolder + "/" + PropertiesUtil.getProjectFileName());
+
+		String projectXmlFilePath = projectFolder + "/" + PropertiesUtil.getProjectFileName();
+		File projectXmlFile = new File(projectXmlFilePath);
 		File[] classXmlFiles = null;
-		
+
 		// validate the project structure and XML files
 		
 		validateProjectDefinitionXML(projectXmlFile);
@@ -77,7 +78,7 @@ public class ProjectLoader {
 	private static void validateProjectDefinitionXML(File projectXmlFile) throws ProjectLoadFailedException {
 		
 		IProjectXMLValidator projectXMLValidator = ValidatorFactory.getProjectXMLValidator();
-		
+
 		if (projectXmlFile.exists() == false) {
 			
 			LOGGER.error(ProjectLoadFailedException.NO_PROJECT);
@@ -102,9 +103,9 @@ public class ProjectLoader {
 		
 		IClassXMLValidator classXMLValidator = ValidatorFactory.getClassXMLValidator();
 		
-    	File classesXml = new File(projectRoot + "/classes"); 
-    	
-    	if (classesXml.exists() == false) {
+    	File classesXml = new File(projectRoot + "/classes/");
+
+    	if (!classesXml.exists() || !classesXml.isDirectory()) {
     		
     		LOGGER.error(ProjectLoadFailedException.NO_CLASS_DEF_DIRECTORY);
     		throw new ProjectLoadFailedException(ProjectLoadFailedException.NO_CLASS_DEF_DIRECTORY);
@@ -112,6 +113,14 @@ public class ProjectLoader {
     	}
     	
     	File[] classXmlFiles = classesXml.listFiles(new XMLFileFilter());
+
+		if (classesXml.length() == 0) {
+
+			LOGGER.error(ProjectLoadFailedException.NO_CLASS_DEF);
+			throw new ProjectLoadFailedException(ProjectLoadFailedException.NO_CLASS_DEF);
+
+		}
+
     	for (File classXml : classXmlFiles) {
     		
     		try {

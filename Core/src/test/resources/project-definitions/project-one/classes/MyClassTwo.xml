@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<Class xmlns="http://www.XML2Code.com/definition"
+       className="MyClassTwo"
+       description="This is a class"
+       superClass="">
+
+    <Reference
+        referenceName="ReferenceOne"
+        referenceType="MyClassFour"
+        required="true"/>
+
+    <List
+        listName="ListOne"
+        itemType="MyClassFour"/>
+
+</Class>

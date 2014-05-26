@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Class
+	xmlns="http://www.XML2Code.com/definition"
+	className="MyClassInvalidSuper"
+	description="This is the XYZ class"
+	superClass="XYZ">
+	
+</Class>
