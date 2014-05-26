@@ -9,13 +9,39 @@
     <artifactId>xml2code-java</artifactId>
     <version>0.1</version>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>	
+	</properties>
+
     <dependencies>
+    
         <dependency>
             <groupId>xml2code</groupId>
             <artifactId>xml2code-core</artifactId>
             <version>0.1</version>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>xml2code</groupId>
+            <artifactId>xml2code-java-utils</artifactId>
+            <version>0.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        
+         </dependency>
+        
+    </dependencies>
 
 </project>
