@@ -7,12 +7,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import com.xml2code.core.definition.InstructionsDefinition;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import com.xml2code.core.definition.InstructionsDef;
 import com.xml2code.core.definition.ProjectDefinition;
 import com.xml2code.core.exception.XMLParseException;
 import com.xml2code.core.parser.IProjectXMLParser;
@@ -50,7 +50,7 @@ public class ProjectXMLParser implements IProjectXMLParser {
 			Element projectNode = (Element) doc.getElementsByTagName(XML_PROJECT).item(0);
 			Element instructionsNode = (Element) projectNode.getElementsByTagName(XML_INSTRUCTIONS).item(0);
 			
-			InstructionsDef instructions = new InstructionsDef();
+			InstructionsDefinition instructions = new InstructionsDefinition();
 			instructions.setGenerateJava(getBoolean(instructionsNode, XML_INSTRUCTIONS_JAVA));
 			instructions.setGenerateRelationalMapping(getBoolean(instructionsNode, XML_INSTRUCTIONS_ORM));
 			instructions.setGenerateApi(getBoolean(instructionsNode, XML_INSTRUCTIONS_API));

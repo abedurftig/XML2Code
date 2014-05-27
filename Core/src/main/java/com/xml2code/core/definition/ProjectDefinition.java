@@ -37,17 +37,13 @@ public class ProjectDefinition {
 	
 	/**
 	 * A list of class definition objects.
-	 * 
-	 * @see com.xml2java.app.definition.ClassDefinition
 	 */
 	private List<ClassDefinition> classDefinitions;
 
 	/**
 	 * The generation instructions for this project.
-	 * 
-	 * @see com.xml2java.app.definition.instructions.GenerationInstructions
 	 */
-	private InstructionsDef instructions;
+	private InstructionsDefinition instructions;
 	
 	/**
 	 * Constructor
@@ -60,6 +56,7 @@ public class ProjectDefinition {
 		this.projectName = projectName;
 		this.targetDir = targetDir;
 		this.classDefinitions = new ArrayList<ClassDefinition>();
+		this.instructions = new InstructionsDefinition();
 	}
 
 	/**
@@ -70,7 +67,7 @@ public class ProjectDefinition {
 	}
 
 	/**
-	 * @param the parent folder of the generated Java project
+	 * @param targetDir
 	 */
 	public void setTargetDir(String targetDir) {
 		this.targetDir = targetDir;
@@ -100,14 +97,14 @@ public class ProjectDefinition {
 	/**
 	 * @return the instructions
 	 */
-	public InstructionsDef getInstructions() {
+	public InstructionsDefinition getInstructions() {
 		return instructions;
 	}
 
 	/**
 	 * @param instructions the instructions to set
 	 */
-	public void setInstructions(InstructionsDef instructions) {
+	public void setInstructions(InstructionsDefinition instructions) {
 		this.instructions = instructions;
 	}
 

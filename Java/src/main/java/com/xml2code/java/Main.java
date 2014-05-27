@@ -1,16 +1,22 @@
 package com.xml2code.java;
 
+import com.xml2code.core.definition.ClassDefinition;
 import com.xml2code.core.definition.ProjectDefinition;
 import com.xml2code.java.exception.JavaProjectCreationFailedException;
 import com.xml2code.java.factory.GeneratorFactory;
 import com.xml2code.java.generator.IDomainClassGenerator;
-import com.xml2code.java.generator.impl.DomainClassGenerator;
 
 public class Main {
 
 	public static void main(String[] args) throws JavaProjectCreationFailedException {
 
 		ProjectDefinition projectDefinition = new ProjectDefinition("MyApp", "/tmp/XML2Code");
+
+		ClassDefinition contact = new ClassDefinition(projectDefinition, "Contact", "", "This is the contact class");
+		ClassDefinition person = new ClassDefinition(projectDefinition, "Person", "Contact", "This is the person class");
+
+		projectDefinition.getClassDefinitions().add(contact);
+		projectDefinition.getClassDefinitions().add(person);
 
 		String javaProjectPath = projectDefinition.getTargetDir() + "/Java";
 		String srcPath = javaProjectPath + "/src/main/java/com/" + projectDefinition.getProjectName().toLowerCase();
@@ -19,6 +25,7 @@ public class Main {
 		IDomainClassGenerator domainClassGenerator = GeneratorFactory.getDomainClassGenerator();
 
 		domainClassGenerator.generateDomainObjectBaseClass(projectDefinition, domainPath);
+		domainClassGenerator.generateDomainObjectClasses(projectDefinition, domainPath);
 
 	}
 

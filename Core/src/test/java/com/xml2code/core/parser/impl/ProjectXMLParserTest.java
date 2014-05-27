@@ -3,6 +3,7 @@ package com.xml2code.core.parser.impl;
 import java.io.File;
 import java.net.URISyntaxException;
 
+import com.xml2code.core.definition.InstructionsDefinition;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +11,6 @@ import org.junit.runners.JUnit4;
 
 import util.TestResourceUtil;
 
-import com.xml2code.core.definition.InstructionsDef;
 import com.xml2code.core.definition.ProjectDefinition;
 import com.xml2code.core.exception.XMLParseException;
 import com.xml2code.core.parser.IProjectXMLParser;
@@ -31,7 +31,7 @@ public class ProjectXMLParserTest {
 		Assert.assertEquals("Expected different target dir", "/tmp", projectDef.getTargetDir());
 		Assert.assertEquals("Expected different database", DatabaseType.h2, projectDef.getDatabaseType());
 		
-		InstructionsDef instructions = projectDef.getInstructions();
+		InstructionsDefinition instructions = projectDef.getInstructions();
 		
 		Assert.assertNotNull("Failure - Generation instructions should not be null", instructions);
 		
