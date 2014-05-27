@@ -10,11 +10,10 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import org.json.JSONObject;
 
-import xml2code.java.utils.json.DateTimeJsonDeserializer;
-import xml2code.java.utils.json.DateTimeJsonSerializer;
-
-import xml2code.java.utils.domain.IDomainObject;
-import xml2code.java.utils.json.IJSONObject;
+import xml2code.java.shared.json.DateTimeJsonDeserializer;
+import xml2code.java.shared.json.DateTimeJsonSerializer;
+import xml2code.java.shared.json.IJSONObject;
+import xml2code.java.shared.domain.IDomainObject;
 
 /**
  *

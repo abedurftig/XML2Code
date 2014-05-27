@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
   
 	<groupId>xml2code</groupId>
-    <artifactId>xml2code-java-utils</artifactId>
+    <artifactId>xml2code-java-shared</artifactId>
     <version>0.1</version>
     
    	<properties>

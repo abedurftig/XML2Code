@@ -1,9 +1,9 @@
-package xml2code.java.utils.reflection;
+package xml2code.java.shared.reflection;
 
 import java.lang.reflect.Method;
 import java.util.List;
 
-import xml2code.java.utils.domain.IDomainObject;
+import xml2code.java.shared.domain.IDomainObject;
 
 public class ReflectionUtil {
 

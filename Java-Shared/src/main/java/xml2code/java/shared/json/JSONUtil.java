@@ -1,4 +1,4 @@
-package xml2code.java.utils.json;
+package xml2code.java.shared.json;
 
 import java.util.Iterator;
 import java.util.List;

@@ -1,4 +1,4 @@
-package xml2code.java.utils.domain;
+package xml2code.java.shared.domain;
 
 public interface IDomainObject {
 
