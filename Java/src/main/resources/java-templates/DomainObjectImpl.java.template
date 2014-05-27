@@ -10,7 +10,7 @@ package <<package>>;
  * @author XML2Java
  */
 <<annotation>>
-public<<java-modifier>>class <<class>> extends <<super>> {
+public<<class-abstract>>class <<class>> extends <<super>> {
 
 	// ----------------------------------------------
 	// Generated Code

@@ -67,6 +67,9 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 
 		List<ReplacementInstruction> replacementInstructions = new ArrayList<ReplacementInstruction>();
 		replacementInstructions.add(new ReplacementInstruction(Pattern.PACKAGE, domainPackage, false));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.CLASS_NAME, classDefinition.getClassName(), false));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.SUPER, classDefinition.getSuperClassName(), false));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.CLASS_ABSTRACT, classDefinition.isSuperClass() ? " abstract " : " ", false));
 		replacementInstructions.add(new ReplacementInstruction(Pattern.DESC, classDefinition.getClassDescription(), false));
 		replacementInstructions.add(new ReplacementInstruction(Pattern.IMPORTS, importStatements, false));
 

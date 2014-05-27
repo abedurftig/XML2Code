@@ -50,22 +50,16 @@ public class ClassDefinition {
 	
 	/**
 	 * A list of field definition objects.
-	 * 
-	 * @see com.xml2java.app.definition.FieldDefinition
 	 */
 	private List<FieldDefinition> fieldDefinitions;
 
 	/**
 	 * A list of reference definition objects.
-	 * 
-	 * @see com.xml2java.app.definition.ReferenceDefinition
 	 */
 	private List<ReferenceDefinition> referenceDefinitions;
 
 	/**
 	 * A list of list definition objects.
-	 * 
-	 * @see com.xml2java.app.definition.ListDefinition
 	 */
 	private List<ListDefinition> listDefinitions;	
 	

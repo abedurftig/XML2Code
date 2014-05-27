@@ -2,6 +2,7 @@ package com.xml2code.java;
 
 import com.xml2code.core.definition.ClassDefinition;
 import com.xml2code.core.definition.ProjectDefinition;
+import com.xml2code.core.model.ModelFinalizer;
 import com.xml2code.java.exception.JavaProjectCreationFailedException;
 import com.xml2code.java.factory.GeneratorFactory;
 import com.xml2code.java.generator.IDomainClassGenerator;
@@ -21,6 +22,8 @@ public class Main {
 		String javaProjectPath = projectDefinition.getTargetDir() + "/Java";
 		String srcPath = javaProjectPath + "/src/main/java/com/" + projectDefinition.getProjectName().toLowerCase();
 		String domainPath = srcPath + "/domain";
+
+		ModelFinalizer.finalize(projectDefinition);
 
 		IDomainClassGenerator domainClassGenerator = GeneratorFactory.getDomainClassGenerator();
 

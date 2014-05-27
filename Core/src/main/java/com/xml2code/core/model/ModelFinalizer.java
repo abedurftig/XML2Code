@@ -8,7 +8,11 @@ import com.xml2code.core.types.RelationshipType;
 
 public class ModelFinalizer {
 
-	public static void finalize(ProjectDefinition projectDef) {}
+	public static void finalize(ProjectDefinition projectDef) {
+
+		determineHierarchy(projectDef);
+
+	}
 
 	public static void determineRelationships(ProjectDefinition projectDef) {
 		
@@ -79,6 +83,22 @@ public class ModelFinalizer {
 			
 		}
 		
+	}
+
+	private static void determineHierarchy(ProjectDefinition projectDef) {
+
+		ClassDefinition superClass = null;
+		for (ClassDefinition classDefinition : projectDef.getClassDefinitions()) {
+
+			if (classDefinition.hasSuperClass()) {
+
+				superClass = projectDef.getClassDefinitionByName(classDefinition.getSuperClassName());
+				superClass.setSuperClass(true);
+
+			}
+
+		}
+
 	}
 	
 }
