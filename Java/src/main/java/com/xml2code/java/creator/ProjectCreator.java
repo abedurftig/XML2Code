@@ -1,13 +1,12 @@
 package com.xml2code.java.creator;
 
-import com.xml2code.core.definition.ClassDefinition;
-import com.xml2code.java.factory.GeneratorFactory;
-import com.xml2code.java.generator.IDomainClassGenerator;
 import org.apache.log4j.Logger;
 
 import com.xml2code.core.definition.ProjectDefinition;
 import com.xml2code.core.util.LoggerUtil;
 import com.xml2code.java.exception.JavaProjectCreationFailedException;
+import com.xml2code.java.factory.GeneratorFactory;
+import com.xml2code.java.generator.IDomainClassGenerator;
 
 public class ProjectCreator {
 
