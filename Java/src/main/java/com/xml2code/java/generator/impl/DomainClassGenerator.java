@@ -10,6 +10,7 @@ import com.xml2code.core.util.StringConstants;
 import com.xml2code.java.exception.JavaProjectCreationFailedException;
 import com.xml2code.java.generator.IDomainClassGenerator;
 import com.xml2code.java.generator.pattern.Pattern;
+import com.xml2code.java.generator.replace.ReplacementInstructions;
 import com.xml2code.java.util.TemplateUtil;
 
 import java.io.File;
@@ -65,13 +66,8 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 
 		String importStatements = generateImports(classDefinition.getProjectDefinition().getInstructions(), classDefinition);
 
-		List<ReplacementInstruction> replacementInstructions = new ArrayList<ReplacementInstruction>();
-		replacementInstructions.add(new ReplacementInstruction(Pattern.PACKAGE, domainPackage, false));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.CLASS_NAME, classDefinition.getClassName(), false));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.SUPER, classDefinition.getSuperClassName(), false));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.CLASS_ABSTRACT, classDefinition.isSuperClass() ? " abstract " : " ", false));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.DESC, classDefinition.getClassDescription(), false));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.IMPORTS, importStatements, false));
+		List<ReplacementInstruction> replacementInstructions = 
+				ReplacementInstructions.getDomainClassInstructions(classDefinition, domainPackage, importStatements);
 
 		content = Replacer.replace(content, replacementInstructions);
 
