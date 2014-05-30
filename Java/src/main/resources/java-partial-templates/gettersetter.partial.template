@@ -1,0 +1,14 @@
+
+	/**
+	 * @return the <<name>>
+	 */
+	public <<type>> <<getter>>() {
+		return <<name>>;
+	}
+	
+	/**
+	 * @param <<name>>
+	 */
+	public void <<setter>>(<<type>> <<name>>) {
+		this.<<name>> = <<name>>;
+	}
