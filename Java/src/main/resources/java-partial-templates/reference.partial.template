@@ -1,0 +1,5 @@
+	/**
+	 * An instance of <code><<type>></code>
+	 */
+	<<annotation>>
+	private <<type>> <<name>>;

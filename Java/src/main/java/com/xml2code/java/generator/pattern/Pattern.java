@@ -13,5 +13,8 @@ public final class Pattern {
 	public static final String ANNOTATION = "(<<annotation>>)";
 	public static final String NAME = "(<<name>>)";
 	public static final String TYPE = "(<<type>>)";
+	public static final String FIELDS = "(<<fields>>)";
+	public static final String REFERENCES = "(<<references>>)";
+	public static final String LISTS = "(<<lists>>)";
 
 }

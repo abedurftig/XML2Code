@@ -11,10 +11,11 @@ public final class TemplateUtil {
 	private static final String JAVA_PATH = "/java-templates/";
 	private static final String JAVA_P_PATH = "/java-partial-templates/";
 	
-	private static final String JAVA_DOMAIN_OBJECT = 			JAVA_PATH + "DomainObject.java.template";
-	private static final String JAVA_DOMAIN_OBJECT_IMPL = 		JAVA_PATH + "DomainObjectImpl.java.template";
+	private static final String JAVA_DOMAIN_OBJECT = 	  JAVA_PATH + "DomainObject.java.template";
+	private static final String JAVA_DOMAIN_OBJECT_IMPL = JAVA_PATH + "DomainObjectImpl.java.template";
 
-	private static final String JAVA_DOMAIN_OBJECT_IMPL_FIELD = JAVA_P_PATH + "field.partial.template";
+	private static final String JAVA_DOMAIN_OBJECT_IMPL_FIELD = 	JAVA_P_PATH + "field.partial.template";
+	private static final String JAVA_DOMAIN_OBJECT_IMPL_REFERENCE = JAVA_P_PATH + "reference.partial.template";
 
 	// ------------------------------------------
 	// Template cache
@@ -51,6 +52,13 @@ public final class TemplateUtil {
 		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL_FIELD);
 	}
 
+	/**
+	 * @return the template for domain object class reference
+	 */
+	public static String getJavaPartialReferenceTemplate() {
+		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL_REFERENCE);
+	}
+
 	// ------------------------------------------
 	// Private methods
 	// ------------------------------------------
@@ -72,5 +80,6 @@ public final class TemplateUtil {
 		}
 		
 	}
-	
+
+
 }

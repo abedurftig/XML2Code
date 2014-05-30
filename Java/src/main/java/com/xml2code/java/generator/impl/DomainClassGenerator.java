@@ -1,9 +1,6 @@
 package com.xml2code.java.generator.impl;
 
-import com.xml2code.core.definition.ClassDefinition;
-import com.xml2code.core.definition.FieldDefinition;
-import com.xml2code.core.definition.InstructionsDefinition;
-import com.xml2code.core.definition.ProjectDefinition;
+import com.xml2code.core.definition.*;
 import com.xml2code.core.exception.UnsupportedFieldTypeException;
 import com.xml2code.core.generator.ReplacementInstruction;
 import com.xml2code.core.generator.Replacer;
@@ -21,6 +18,7 @@ import com.xml2code.java.util.TemplateUtil;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class DomainClassGenerator implements IDomainClassGenerator {
@@ -28,7 +26,7 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 	public void generateDomainObjectBaseClass(ProjectDefinition projectDef, String domainPath)
 			throws JavaProjectCreationFailedException {
 
-		String domainPackage = "com." + projectDef.getProjectName().toLowerCase() + ".domain";
+		String domainPackage = getDomainPackage(projectDef);
 
 		String content = TemplateUtil.getJavaDomainObjectTemplate();
 
@@ -54,7 +52,7 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 	public void generateDomainObjectClasses(ProjectDefinition projectDef, String domainPath)
 			throws JavaProjectCreationFailedException {
 
-		String domainPackage = "com." + projectDef.getProjectName().toLowerCase() + ".domain";
+		String domainPackage = getDomainPackage(projectDef);
 
 		for (ClassDefinition classDefinition : projectDef.getClassDefinitions()) {
 
@@ -67,30 +65,38 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 	private void generateDomainObjectClass(ClassDefinition classDefinition, String domainPath, String domainPackage)
 			throws JavaProjectCreationFailedException {
 
-		String content = TemplateUtil.getJavaDomainObjectImplTemplate();
-
-		String importStatements = generateImports(classDefinition.getProjectDefinition().getInstructions(), classDefinition);
-
-		List<ReplacementInstruction> replacementInstructions = 
-				ReplacementInstructions.getDomainClassInstructions(classDefinition, domainPackage, importStatements);
-
-		content = Replacer.replace(content, replacementInstructions);
-
-		File contentFile = new File(domainPath + "/" + classDefinition.getClassName() + ".java");
-
 		try {
 
+			String content = TemplateUtil.getJavaDomainObjectImplTemplate();
+			String importStatements = generateImports(classDefinition.getProjectDefinition().getInstructions(), classDefinition);
+			String annotations = generateClassAnnotations(classDefinition);
+			String fields = generateFields(classDefinition);
+			String references = generateReferences(classDefinition);
+			String lists = generateLists(classDefinition);
+			String constructor = generateConstructor(classDefinition);
+			String gettersAndSetters = generateGettersAndSetters(classDefinition);
+
+			List<ReplacementInstruction> replacementInstructions = ReplacementInstructions.getDomainClassInstructions(
+					classDefinition, domainPackage, importStatements, annotations, fields, references,
+					lists, constructor, gettersAndSetters);
+
+			content = Replacer.replace(content, replacementInstructions);
+			File contentFile = new File(domainPath + "/" + classDefinition.getClassName() + ".java");
 			ResourceUtil.writeContentToFile(contentFile, content, ResourceUtil.FILE_TYPE_JAVA);
 
 		} catch (IOException ioe) {
 
 			throw new JavaProjectCreationFailedException(ioe);
 
+		} catch (UnsupportedFieldTypeException ufte) {
+
+			throw new JavaProjectCreationFailedException(ufte);
+
 		}
 
 	}
 
-	private String generateImports(InstructionsDefinition instructionsDefinition,
+	protected String generateImports(InstructionsDefinition instructionsDefinition,
 									 ClassDefinition classDefinition) {
 
 		StringBuffer imports = new StringBuffer();
@@ -103,6 +109,100 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 		}
 
 		return imports.toString();
+
+	}
+
+	protected String generateClassAnnotations(ClassDefinition classDefinition) {
+
+		// TODO: finish implementation
+		return "";
+
+	}
+
+	protected String generateLists(ClassDefinition classDefinition) {
+
+		// TODO: finish implementation
+		return "";
+
+	}
+
+	protected String generateConstructor(ClassDefinition classDefinition) {
+
+		// TODO: finish implementation
+		return "";
+
+	}
+
+	protected String generateGettersAndSetters(ClassDefinition classDefinition) {
+
+		// TODO: finish implementation
+		return "";
+
+	}
+
+	protected String generateFields(ClassDefinition classDefinition) throws UnsupportedFieldTypeException {
+
+		IAnnotationGenerator annotationGenerator = GeneratorFactory.getAnnotationGenerator();
+
+		StringBuffer output = new StringBuffer();
+
+		FieldDefinition fieldDefinition = null;
+		String code = "";
+		String annotations = "";
+		List<ReplacementInstruction> replacementInstructions = null;
+
+		Iterator<FieldDefinition> iterator = classDefinition.getFieldDefinitions().iterator();
+		while (iterator.hasNext()) {
+
+			fieldDefinition = iterator.next();
+			code = TemplateUtil.getJavaPartialFieldTemplate();
+			annotations = annotationGenerator.getFieldAnnotations(fieldDefinition);
+
+			replacementInstructions = ReplacementInstructions.getFieldInstructions(fieldDefinition, annotations);
+
+			code = Replacer.replace(code, replacementInstructions);
+
+			output.append(code);
+
+		}
+
+		return output.toString();
+
+	}
+
+	protected String generateReferences(ClassDefinition classDefinition) {
+
+		IAnnotationGenerator annotationGenerator = GeneratorFactory.getAnnotationGenerator();
+
+		StringBuffer output = new StringBuffer();
+
+		ReferenceDefinition referenceDefinition = null;
+		String code = "";
+		String annotations = "";
+		List<ReplacementInstruction> replacementInstructions = null;
+
+		Iterator<ReferenceDefinition> iterator = classDefinition.getReferenceDefinitions().iterator();
+		while (iterator.hasNext()) {
+
+			referenceDefinition = iterator.next();
+			code = TemplateUtil.getJavaPartialReferenceTemplate();
+			annotations = annotationGenerator.getReferenceAnnotations(referenceDefinition);
+
+			replacementInstructions = ReplacementInstructions.getReferenceInstructions(referenceDefinition, annotations);
+
+			code = Replacer.replace(code, replacementInstructions);
+
+			output.append(code);
+
+		}
+
+		return output.toString();
+
+	}
+
+	private String getDomainPackage(ProjectDefinition projectDefinition) {
+
+		return "com." + projectDefinition.getProjectName().toLowerCase() + ".domain";
 
 	}
 
@@ -137,37 +237,6 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 		}
 
 		return importStatements;
-
-	}
-
-	protected String generateFields(ClassDefinition classDefinition)
-			throws UnsupportedFieldTypeException {
-
-		IAnnotationGenerator annotationGenerator = GeneratorFactory.getAnnotationGenerator();
-
-		StringBuffer fields = new StringBuffer();
-
-		for (int i = 0; i < classDefinition.getFieldDefinitions().size(); i++) {
-
-			if (i > 0) {
-				fields.append(StringConstants.NEW_LINE);
-			}
-
-			FieldDefinition fieldDefinition = classDefinition.getFieldDefinitions().get(i);
-
-			String code = TemplateUtil.getJavaPartialFieldTemplate();
-			code = code.replaceAll(Pattern.NAME, fieldDefinition.getFieldName());
-			code = code.replaceAll(Pattern.TYPE, FieldType.getType(fieldDefinition));
-
-			String annotations = annotationGenerator.getFieldAnnotations(fieldDefinition);
-			String annotationsPattern = Pattern.ANNOTATION + (annotations.isEmpty() ? "\t" : "");
-			code = code.replaceAll(annotationsPattern, annotations);
-
-			fields.append(code);
-
-		}
-
-		return fields.toString();
 
 	}
 
