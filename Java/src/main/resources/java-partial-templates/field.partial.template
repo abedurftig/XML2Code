@@ -1,0 +1,5 @@
+	/**
+	 * The <<name>>
+	 */
+	<<annotation>>
+	private <<type>> <<name>>;

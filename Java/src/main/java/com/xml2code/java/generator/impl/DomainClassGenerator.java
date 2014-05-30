@@ -1,13 +1,18 @@
 package com.xml2code.java.generator.impl;
 
 import com.xml2code.core.definition.ClassDefinition;
+import com.xml2code.core.definition.FieldDefinition;
 import com.xml2code.core.definition.InstructionsDefinition;
 import com.xml2code.core.definition.ProjectDefinition;
+import com.xml2code.core.exception.UnsupportedFieldTypeException;
 import com.xml2code.core.generator.ReplacementInstruction;
 import com.xml2code.core.generator.Replacer;
+import com.xml2code.core.types.FieldType;
 import com.xml2code.core.util.ResourceUtil;
 import com.xml2code.core.util.StringConstants;
 import com.xml2code.java.exception.JavaProjectCreationFailedException;
+import com.xml2code.java.factory.GeneratorFactory;
+import com.xml2code.java.generator.IAnnotationGenerator;
 import com.xml2code.java.generator.IDomainClassGenerator;
 import com.xml2code.java.generator.pattern.Pattern;
 import com.xml2code.java.generator.replace.ReplacementInstructions;
@@ -132,6 +137,37 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 		}
 
 		return importStatements;
+
+	}
+
+	protected String generateFields(ClassDefinition classDefinition)
+			throws UnsupportedFieldTypeException {
+
+		IAnnotationGenerator annotationGenerator = GeneratorFactory.getAnnotationGenerator();
+
+		StringBuffer fields = new StringBuffer();
+
+		for (int i = 0; i < classDefinition.getFieldDefinitions().size(); i++) {
+
+			if (i > 0) {
+				fields.append(StringConstants.NEW_LINE);
+			}
+
+			FieldDefinition fieldDefinition = classDefinition.getFieldDefinitions().get(i);
+
+			String code = TemplateUtil.getJavaPartialFieldTemplate();
+			code = code.replaceAll(Pattern.NAME, fieldDefinition.getFieldName());
+			code = code.replaceAll(Pattern.TYPE, FieldType.getType(fieldDefinition));
+
+			String annotations = annotationGenerator.getFieldAnnotations(fieldDefinition);
+			String annotationsPattern = Pattern.ANNOTATION + (annotations.isEmpty() ? "\t" : "");
+			code = code.replaceAll(annotationsPattern, annotations);
+
+			fields.append(code);
+
+		}
+
+		return fields.toString();
 
 	}
 

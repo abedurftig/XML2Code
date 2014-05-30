@@ -10,5 +10,8 @@ public final class Pattern {
 	public static final String IMPORTS = "(<<imports>>)";
 	public static final String SUPER = "(<<super>>)";
 	public static final String CLASS_ABSTRACT = "(<<class-abstract>>)";
+	public static final String ANNOTATION = "(<<annotation>>)";
+	public static final String NAME = "(<<name>>)";
+	public static final String TYPE = "(<<type>>)";
 
 }
