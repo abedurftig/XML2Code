@@ -11,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) throws JavaProjectCreationFailedException {
 
-		ProjectDefinition projectDefinition = new ProjectDefinition("MyApp", "/tmp/XML2Code");
+		ProjectDefinition projectDefinition = new ProjectDefinition("MyApp", "/Applications/Development/tmp/XML2Code");
 
 		ClassDefinition contact = new ClassDefinition(projectDefinition, "Contact", "", "This is the contact class");
 		ClassDefinition person = new ClassDefinition(projectDefinition, "Person", "Contact", "This is the person class");

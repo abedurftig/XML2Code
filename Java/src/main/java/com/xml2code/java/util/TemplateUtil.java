@@ -9,11 +9,15 @@ import com.xml2code.core.util.ResourceUtil;
 public final class TemplateUtil {
 
 	private static final String JAVA_PATH = "/java-templates/";
-	//private static final String JAVA_P_PATH = "/java-partial-templates/";
+	private static final String JAVA_P_PATH = "/java-partial-templates/";
 	
-	private static final String JAVA_DOMAIN_OBJECT = 		JAVA_PATH + "DomainObject.java.template";
-	private static final String JAVA_DOMAIN_OBJECT_IMPL = 	JAVA_PATH + "DomainObjectImpl.java.template";
-	
+	private static final String JAVA_DOMAIN_OBJECT = 	  JAVA_PATH + "DomainObject.java.template";
+	private static final String JAVA_DOMAIN_OBJECT_IMPL = JAVA_PATH + "DomainObjectImpl.java.template";
+
+	private static final String JAVA_DOMAIN_OBJECT_IMPL_FIELD = 		JAVA_P_PATH + "field.partial.template";
+	private static final String JAVA_DOMAIN_OBJECT_IMPL_REFERENCE = 	JAVA_P_PATH + "reference.partial.template";
+	private static final String JAVA_DOMAIN_OBJECT_IMPL_GETTER_SETTER = JAVA_P_PATH + "gettersetter.partial.template";
+
 	// ------------------------------------------
 	// Template cache
 	// ------------------------------------------
@@ -37,7 +41,32 @@ public final class TemplateUtil {
 	public static String getJavaDomainObjectImplTemplate() {
 		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL);
 	}
-	
+
+	// ------------------------------------------
+	// Java partial templates
+	// ------------------------------------------
+
+	/**
+	 * @return the template for domain object class field
+	 */
+	public static String getJavaPartialFieldTemplate() {
+		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL_FIELD);
+	}
+
+	/**
+	 * @return the template for domain object class reference
+	 */
+	public static String getJavaPartialReferenceTemplate() {
+		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL_REFERENCE);
+	}
+
+	/**
+	 * @return the template for domain object class getter / setter
+	 */
+	public static String getJavaPartialGetterSetterTemplate() {
+		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL_GETTER_SETTER);
+	}
+
 	// ------------------------------------------
 	// Private methods
 	// ------------------------------------------
@@ -59,5 +88,6 @@ public final class TemplateUtil {
 		}
 		
 	}
-	
+
+
 }
