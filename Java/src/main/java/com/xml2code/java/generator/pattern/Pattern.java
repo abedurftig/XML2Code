@@ -16,5 +16,9 @@ public final class Pattern {
 	public static final String FIELDS = "(<<fields>>)";
 	public static final String REFERENCES = "(<<references>>)";
 	public static final String LISTS = "(<<lists>>)";
+	public static final String MODIFIERS = "(<<modifiers>>)";
+	public static final String GETTER = "(<<getter>>)";
+	public static final String SETTER = "(<<setter>>)";
+	public static final String CONSTRUCTOR = "(<<constructor>>)";
 
 }

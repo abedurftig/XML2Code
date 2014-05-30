@@ -62,7 +62,7 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 		
 	}
 
-	private void generateDomainObjectClass(ClassDefinition classDefinition, String domainPath, String domainPackage)
+	protected void generateDomainObjectClass(ClassDefinition classDefinition, String domainPath, String domainPackage)
 			throws JavaProjectCreationFailedException {
 
 		try {
@@ -135,8 +135,41 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 
 	protected String generateGettersAndSetters(ClassDefinition classDefinition) {
 
-		// TODO: finish implementation
-		return "";
+		StringBuffer output = new StringBuffer();
+		String template = TemplateUtil.getJavaPartialGetterSetterTemplate();
+		String code = "";
+
+		for (int i = 0; i < classDefinition.getFieldDefinitions().size(); i++) {
+
+			FieldDefinition fieldDefinition = classDefinition.getFieldDefinitions().get(i);
+			List<ReplacementInstruction> replacementInstructions =
+					ReplacementInstructions.getFieldModifiersInstructions(fieldDefinition);
+			code = Replacer.replace(template, replacementInstructions);
+			output.append(code);
+
+		}
+
+		for (int i = 0; i < classDefinition.getReferenceDefinitions().size(); i++) {
+
+			ReferenceDefinition referenceDefinition = classDefinition.getReferenceDefinitions().get(i);
+			List<ReplacementInstruction> replacementInstructions =
+					ReplacementInstructions.getReferenceModifiersInstructions(referenceDefinition);
+			code = Replacer.replace(template, replacementInstructions);
+			output.append(code);
+
+		}
+
+		for (int i = 0; i < classDefinition.getListDefinitions().size(); i++) {
+
+			ListDefinition listDefinition = classDefinition.getListDefinitions().get(i);
+			List<ReplacementInstruction> replacementInstructions =
+					ReplacementInstructions.getListModifiersInstructions(listDefinition);
+			code = Replacer.replace(template, replacementInstructions);
+			output.append(code);
+
+		}
+
+		return output.toString();
 
 	}
 
