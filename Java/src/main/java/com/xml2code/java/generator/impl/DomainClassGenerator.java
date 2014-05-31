@@ -169,7 +169,7 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 	protected String generateFields(ClassDefinition classDefinition) throws UnsupportedFieldTypeException {
 
 		return generateMembers(classDefinition.getFieldDefinitions(), 
-				TemplateUtil.getJavaPartialReferenceTemplate());
+				TemplateUtil.getJavaPartialFieldTemplate());
 
 	}
 
