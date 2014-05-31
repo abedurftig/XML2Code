@@ -60,7 +60,7 @@ public class ManyToOne extends Annotation implements ReferenceAnnotation {
 	private String getJoinColumnName() {
 		
 		// split by upper case letter
-		String[] words = refDef.getReferenceType().split("(?=\\p{Upper})");
+		String[] words = refDef.getType().split("(?=\\p{Upper})");
 		
 		for (int i = 0; i < words.length; i++) {	
 			words[i] = words[i].toUpperCase();

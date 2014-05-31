@@ -1,10 +1,19 @@
 package com.xml2code.java.generator.impl;
 
-import com.xml2code.core.definition.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import com.xml2code.core.definition.ClassDefinition;
+import com.xml2code.core.definition.IMemberDefinition;
+import com.xml2code.core.definition.InstructionsDefinition;
+import com.xml2code.core.definition.ListDefinition;
+import com.xml2code.core.definition.ProjectDefinition;
 import com.xml2code.core.exception.UnsupportedFieldTypeException;
 import com.xml2code.core.generator.ReplacementInstruction;
 import com.xml2code.core.generator.Replacer;
-import com.xml2code.core.types.FieldType;
 import com.xml2code.core.util.ResourceUtil;
 import com.xml2code.core.util.StringConstants;
 import com.xml2code.java.exception.JavaProjectCreationFailedException;
@@ -14,12 +23,6 @@ import com.xml2code.java.generator.IDomainClassGenerator;
 import com.xml2code.java.generator.pattern.Pattern;
 import com.xml2code.java.generator.replace.ReplacementInstructions;
 import com.xml2code.java.util.TemplateUtil;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class DomainClassGenerator implements IDomainClassGenerator {
 
@@ -119,55 +122,45 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 
 	}
 
-	protected String generateLists(ClassDefinition classDefinition) {
-
-		// TODO: finish implementation
-		return "";
-
-	}
-
 	protected String generateConstructor(ClassDefinition classDefinition) {
 
-		// TODO: finish implementation
-		return "";
+		StringBuffer lists = new StringBuffer(); 
+		
+		for (int i = 0; i < classDefinition.getListDefinitions().size(); i++) {
+			
+			if (i > 0) {
+				lists.append("\t");
+			}
+			
+			ListDefinition listDef = classDefinition.getListDefinitions().get(i);
+			
+			String initList = TemplateUtil.getJavaPartialInitListTemplate();
+			List<ReplacementInstruction> listsReplacementInstructions = ReplacementInstructions.getInitListInstructions(listDef);
+			initList = Replacer.replace(initList, listsReplacementInstructions);
+			
+			lists.append(initList);
+		}
+		
+		String code = TemplateUtil.getJavaPartialConstructorTemplate();
+		
+		List<ReplacementInstruction> replacementInstructions = ReplacementInstructions.getConstructorInstructions(classDefinition, lists.toString());
+		code = Replacer.replace(code, replacementInstructions);
+		
+		return code;
 
 	}
 
 	protected String generateGettersAndSetters(ClassDefinition classDefinition) {
 
 		StringBuffer output = new StringBuffer();
-		String template = TemplateUtil.getJavaPartialGetterSetterTemplate();
-		String code = "";
 
-		for (int i = 0; i < classDefinition.getFieldDefinitions().size(); i++) {
-
-			FieldDefinition fieldDefinition = classDefinition.getFieldDefinitions().get(i);
-			List<ReplacementInstruction> replacementInstructions =
-					ReplacementInstructions.getFieldModifiersInstructions(fieldDefinition);
-			code = Replacer.replace(template, replacementInstructions);
-			output.append(code);
-
-		}
-
-		for (int i = 0; i < classDefinition.getReferenceDefinitions().size(); i++) {
-
-			ReferenceDefinition referenceDefinition = classDefinition.getReferenceDefinitions().get(i);
-			List<ReplacementInstruction> replacementInstructions =
-					ReplacementInstructions.getReferenceModifiersInstructions(referenceDefinition);
-			code = Replacer.replace(template, replacementInstructions);
-			output.append(code);
-
-		}
-
-		for (int i = 0; i < classDefinition.getListDefinitions().size(); i++) {
-
-			ListDefinition listDefinition = classDefinition.getListDefinitions().get(i);
-			List<ReplacementInstruction> replacementInstructions =
-					ReplacementInstructions.getListModifiersInstructions(listDefinition);
-			code = Replacer.replace(template, replacementInstructions);
-			output.append(code);
-
-		}
+		String fields = generateMemberGettersAndSetters(classDefinition.getFieldDefinitions());
+		String references = generateMemberGettersAndSetters(classDefinition.getReferenceDefinitions());
+		String lists = generateMemberGettersAndSetters(classDefinition.getListDefinitions());
+		
+		output.append(fields);
+		output.append(references);
+		output.append(lists);
 
 		return output.toString();
 
@@ -175,64 +168,72 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 
 	protected String generateFields(ClassDefinition classDefinition) throws UnsupportedFieldTypeException {
 
-		IAnnotationGenerator annotationGenerator = GeneratorFactory.getAnnotationGenerator();
-
-		StringBuffer output = new StringBuffer();
-
-		FieldDefinition fieldDefinition = null;
-		String code = "";
-		String annotations = "";
-		List<ReplacementInstruction> replacementInstructions = null;
-
-		Iterator<FieldDefinition> iterator = classDefinition.getFieldDefinitions().iterator();
-		while (iterator.hasNext()) {
-
-			fieldDefinition = iterator.next();
-			code = TemplateUtil.getJavaPartialFieldTemplate();
-			annotations = annotationGenerator.getFieldAnnotations(fieldDefinition);
-
-			replacementInstructions = ReplacementInstructions.getFieldInstructions(fieldDefinition, annotations);
-
-			code = Replacer.replace(code, replacementInstructions);
-
-			output.append(code);
-
-		}
-
-		return output.toString();
+		return generateMembers(classDefinition.getFieldDefinitions(), 
+				TemplateUtil.getJavaPartialReferenceTemplate());
 
 	}
 
 	protected String generateReferences(ClassDefinition classDefinition) {
 
-		IAnnotationGenerator annotationGenerator = GeneratorFactory.getAnnotationGenerator();
+		return generateMembers(classDefinition.getReferenceDefinitions(), 
+				TemplateUtil.getJavaPartialReferenceTemplate());
 
+	}
+	
+	protected String generateLists(ClassDefinition classDefinition) {
+
+		return generateMembers(classDefinition.getListDefinitions(), 
+				TemplateUtil.getJavaPartialListTemplate());
+
+	}
+
+	protected String generateMembers(List<? extends IMemberDefinition> members, String template) {
+		
+		IAnnotationGenerator annotationGenerator = GeneratorFactory.getAnnotationGenerator();
+		
 		StringBuffer output = new StringBuffer();
 
-		ReferenceDefinition referenceDefinition = null;
+		IMemberDefinition memberDefinition = null;
 		String code = "";
 		String annotations = "";
 		List<ReplacementInstruction> replacementInstructions = null;
 
-		Iterator<ReferenceDefinition> iterator = classDefinition.getReferenceDefinitions().iterator();
+		Iterator<? extends IMemberDefinition> iterator = members.iterator();
 		while (iterator.hasNext()) {
 
-			referenceDefinition = iterator.next();
-			code = TemplateUtil.getJavaPartialReferenceTemplate();
-			annotations = annotationGenerator.getReferenceAnnotations(referenceDefinition);
-
-			replacementInstructions = ReplacementInstructions.getReferenceInstructions(referenceDefinition, annotations);
-
+			memberDefinition = iterator.next();
+			code = template;
+			annotations = annotationGenerator.getMemberAnnotations(memberDefinition);
+			replacementInstructions = ReplacementInstructions.getMemberInstructions(memberDefinition, annotations);
 			code = Replacer.replace(code, replacementInstructions);
-
 			output.append(code);
 
 		}
 
 		return output.toString();
-
+		
 	}
+	
+	protected String generateMemberGettersAndSetters(List<? extends IMemberDefinition> members) {
+		
+		StringBuffer output = new StringBuffer();
+		String template = TemplateUtil.getJavaPartialGetterSetterTemplate();
+		String code = "";
+		
+		for (int i = 0; i < members.size(); i++) {
 
+			IMemberDefinition member = members.get(i);
+			List<ReplacementInstruction> replacementInstructions =
+					ReplacementInstructions.getMemberGetterAndSetterInstructions(member);
+			code = Replacer.replace(template, replacementInstructions);
+			output.append(code);
+
+		}
+		
+		return output.toString();
+		
+	}
+	
 	private String getDomainPackage(ProjectDefinition projectDefinition) {
 
 		return "com." + projectDefinition.getProjectName().toLowerCase() + ".domain";

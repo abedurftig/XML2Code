@@ -206,7 +206,7 @@ public class ClassDefinition {
 	public ReferenceDefinition getReferenceOfType(String typeName) {
 
 		for (ReferenceDefinition refDef : referenceDefinitions) {
-			if (refDef.getReferenceType().equals(typeName)) {
+			if (refDef.getType().equals(typeName)) {
 				return refDef;
 			}
 		}
@@ -224,7 +224,7 @@ public class ClassDefinition {
 	public ListDefinition getListOfType(String typeName) {
 
 		for (ListDefinition listDef : listDefinitions) {
-			if (listDef.getListItemType().equals(typeName)) {
+			if (listDef.getType().equals(typeName)) {
 				return listDef;
 			}
 		}
@@ -241,7 +241,7 @@ public class ClassDefinition {
 	public FieldDefinition getFieldDefinitionByName(String fieldName) {
 		
 		for (FieldDefinition fieldDef : fieldDefinitions) {
-			if (fieldDef.getFieldName().equals(fieldName)) {
+			if (fieldDef.getName().equals(fieldName)) {
 				return fieldDef;
 			}
 		}
@@ -307,7 +307,7 @@ public class ClassDefinition {
 	public boolean hasListOfType(String typeName) {
 		
 		for (ListDefinition listDef : listDefinitions) {
-			if (listDef.getListItemType().equals(typeName)) {
+			if (listDef.getType().equals(typeName)) {
 				return true;
 			}
 		}

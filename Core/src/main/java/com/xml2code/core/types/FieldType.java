@@ -17,8 +17,20 @@ public enum FieldType {
 	public static String getType(FieldDefinition fieldDefinition) throws UnsupportedFieldTypeException {
 		
 		FieldType type = fieldDefinition.getFieldType();
+		String name = type.toString();
 		
-		switch (type) {
+		if (name == null) {
+			
+			throw new UnsupportedFieldTypeException("The type '" + type + "' is not yet supported");
+			
+		}
+		
+		return name;
+	}
+	
+	public String toString() {
+		
+		switch (this) {
 		case bit :
 			return "boolean";
 		case integer :
@@ -34,7 +46,7 @@ public enum FieldType {
 		case id :
 			return "long";
 		default :
-			throw new UnsupportedFieldTypeException("The type '" + type + "' is not yet supported");
+			return null;
 		}
 	}
 }

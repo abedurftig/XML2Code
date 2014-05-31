@@ -7,7 +7,7 @@ package <<package>>;
  * NOTE: You should not manually modify this class until you are sure 
  * that your data model is complete and satisfies your needs.
  *
- * @author XML2Java
+ * @author XML2Code
  */
 <<annotation>>
 public<<class-abstract>>class <<class>> extends <<super>> {

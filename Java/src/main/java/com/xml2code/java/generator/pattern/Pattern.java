@@ -20,5 +20,6 @@ public final class Pattern {
 	public static final String GETTER = "(<<getter>>)";
 	public static final String SETTER = "(<<setter>>)";
 	public static final String CONSTRUCTOR = "(<<constructor>>)";
+	public static final String INIT_LISTS = "(<<initLists>>)";
 
 }

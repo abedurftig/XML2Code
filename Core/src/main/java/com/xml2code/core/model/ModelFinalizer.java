@@ -35,7 +35,7 @@ public class ModelFinalizer {
 		
 		for (ReferenceDefinition refDef : classDef.getReferenceDefinitions()) {
 			
-			ClassDefinition ownedClass = projectDef.getClassDefinitionByName(refDef.getReferenceType());
+			ClassDefinition ownedClass = projectDef.getClassDefinitionByName(refDef.getType());
 			
 			boolean hasReference = ownedClass.hasReferenceToType(className);
 			refDef.setUnidirectional(!hasReference);
@@ -65,7 +65,7 @@ public class ModelFinalizer {
 		
 		for (ListDefinition listDef : classDef.getListDefinitions()) {
 			
-			ClassDefinition ownedClass = projectDef.getClassDefinitionByName(listDef.getListItemType());
+			ClassDefinition ownedClass = projectDef.getClassDefinitionByName(listDef.getType());
 			
 			boolean hasReference = ownedClass.hasReferenceToType(className);
 			listDef.setUnidirectional(!hasReference);

@@ -74,7 +74,7 @@ public class Column extends JpaAnnotation implements FieldAnnotation {
 	private String getColumnName() {
 		
 		// split by upper case letter
-		String[] words = this.fieldDef.getFieldName().split("(?=\\p{Upper})");
+		String[] words = this.fieldDef.getName().split("(?=\\p{Upper})");
 		
 		for (int i = 0; i < words.length; i++) {	
 			words[i] = words[i].toUpperCase();

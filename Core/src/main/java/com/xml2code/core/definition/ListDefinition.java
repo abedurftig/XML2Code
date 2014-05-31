@@ -7,7 +7,7 @@ import com.xml2code.core.types.RelationshipType;
  * 
  * @author dasnervtdoch
  */
-public class ListDefinition {
+public class ListDefinition implements IMemberDefinition {
 
 	/**
 	 * The name of this list.
@@ -49,7 +49,7 @@ public class ListDefinition {
 	/**
 	 * @return the listName
 	 */
-	public String getListName() {
+	public String getName() {
 		return listName;
 	}
 
@@ -63,7 +63,7 @@ public class ListDefinition {
 	/**
 	 * @return the listItemType
 	 */
-	public String getListItemType() {
+	public String getType() {
 		return listItemType;
 	}
 

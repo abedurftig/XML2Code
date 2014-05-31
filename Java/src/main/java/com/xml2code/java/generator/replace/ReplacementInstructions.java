@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xml2code.core.definition.ClassDefinition;
-import com.xml2code.core.definition.FieldDefinition;
+import com.xml2code.core.definition.IMemberDefinition;
 import com.xml2code.core.definition.ListDefinition;
-import com.xml2code.core.definition.ReferenceDefinition;
-import com.xml2code.core.exception.UnsupportedFieldTypeException;
 import com.xml2code.core.generator.ReplacementInstruction;
-import com.xml2code.core.types.FieldType;
 import com.xml2code.java.generator.pattern.Pattern;
 import com.xml2code.java.util.NameUtil;
 
@@ -36,74 +33,54 @@ public class ReplacementInstructions {
 		return replacementInstructions;
 		
 	}
-
+	
 	// ------------------------------------------
-	// Fields
+	// Members
 	// ------------------------------------------
-
-	public static List<ReplacementInstruction> getFieldInstructions(
-			FieldDefinition fieldDefinition, String annotations) throws UnsupportedFieldTypeException {
+	
+	public static List<ReplacementInstruction> getMemberInstructions(
+			IMemberDefinition memberDefinition, String annotations) {
 
 		List<ReplacementInstruction> replacementInstructions = new ArrayList<ReplacementInstruction>();
-		replacementInstructions.add(new ReplacementInstruction(Pattern.NAME, fieldDefinition.getFieldName(), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.TYPE, FieldType.getType(fieldDefinition), true));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.NAME, memberDefinition.getName(), true));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.TYPE, memberDefinition.getType(), true));
 		replacementInstructions.add(new ReplacementInstruction(Pattern.ANNOTATION, annotations, true));
 
 		return replacementInstructions;
 
 	}
 
-	public static List<ReplacementInstruction> getFieldModifiersInstructions(FieldDefinition fieldDefinition) {
+	public static List<ReplacementInstruction> getMemberGetterAndSetterInstructions(IMemberDefinition memberDefinition) {
 
 		List<ReplacementInstruction> replacementInstructions = new ArrayList<ReplacementInstruction>();
-		replacementInstructions.add(new ReplacementInstruction(Pattern.NAME, fieldDefinition.getFieldName(), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.TYPE, fieldDefinition.getFieldName(), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.GETTER, NameUtil.getGetterName(fieldDefinition), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.SETTER, NameUtil.getSetterName(fieldDefinition), true));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.NAME, memberDefinition.getName(), true));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.TYPE, memberDefinition.getType(), true));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.GETTER, NameUtil.getGetterName(memberDefinition), true));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.SETTER, NameUtil.getSetterName(memberDefinition), true));
 
 		return replacementInstructions;
 
 	}
-
+	
 	// ------------------------------------------
-	// Lists
+	// Constructor
 	// ------------------------------------------
-
-	public static List<ReplacementInstruction> getListModifiersInstructions(ListDefinition listDefinition) {
+	
+	public static List<ReplacementInstruction> getConstructorInstructions(ClassDefinition classDefinition, String lists) {
 
 		List<ReplacementInstruction> replacementInstructions = new ArrayList<ReplacementInstruction>();
-		replacementInstructions.add(new ReplacementInstruction(Pattern.NAME, listDefinition.getListName(), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.TYPE, "List<" + listDefinition.getListItemType() + ">", true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.GETTER, NameUtil.getGetterName(listDefinition), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.SETTER, NameUtil.getSetterName(listDefinition), true));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.CLASS_NAME, classDefinition.getClassName(), false));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.INIT_LISTS, lists, false));
 
 		return replacementInstructions;
 
 	}
-
-	// ------------------------------------------
-	// References
-	// ------------------------------------------
-
-	public static List<ReplacementInstruction> getReferenceInstructions(
-			ReferenceDefinition referenceDefinition, String annotations) {
+	
+	public static List<ReplacementInstruction> getInitListInstructions(ListDefinition listDefinition) {
 
 		List<ReplacementInstruction> replacementInstructions = new ArrayList<ReplacementInstruction>();
-		replacementInstructions.add(new ReplacementInstruction(Pattern.NAME, referenceDefinition.getReferenceName(), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.TYPE, referenceDefinition.getReferenceType(), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.ANNOTATION, annotations, true));
-
-		return replacementInstructions;
-
-	}
-
-	public static List<ReplacementInstruction> getReferenceModifiersInstructions(ReferenceDefinition referenceDefinition) {
-
-		List<ReplacementInstruction> replacementInstructions = new ArrayList<ReplacementInstruction>();
-		replacementInstructions.add(new ReplacementInstruction(Pattern.NAME, referenceDefinition.getReferenceName(), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.TYPE, referenceDefinition.getReferenceType(), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.GETTER, NameUtil.getGetterName(referenceDefinition), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.SETTER, NameUtil.getSetterName(referenceDefinition), true));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.TYPE, listDefinition.getType(), false));
+		replacementInstructions.add(new ReplacementInstruction(Pattern.NAME, listDefinition.getName(), false));
 
 		return replacementInstructions;
 

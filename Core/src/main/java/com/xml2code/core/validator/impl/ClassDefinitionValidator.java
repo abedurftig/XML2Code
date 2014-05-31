@@ -17,7 +17,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 
 			if (refDef.getRelationshipType() == RelationshipType.oneToOne) { 
 
-				ClassDefinition referencedClass = projectDef.getClassDefinitionByName(refDef.getReferenceType());
+				ClassDefinition referencedClass = projectDef.getClassDefinitionByName(refDef.getType());
 				ReferenceDefinition backRef = referencedClass.getReferenceOfType(classDef.getClassName());
 
 				// just double checking
@@ -27,7 +27,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 							"Unidirectional reference cannot have a back-reference [class: "
 									+ classDef.getClassName()
 									+ ", reference to: "
-									+ refDef.getReferenceType()
+									+ refDef.getType()
 									+ "]");
 					
 				}
@@ -39,7 +39,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 							"Bidirectional reference has no birectional back-reference [class: "
 									+ classDef.getClassName()
 									+ ", reference to: "
-									+ refDef.getReferenceType()
+									+ refDef.getType()
 									+ "]");
 					
 				}
@@ -50,7 +50,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 							"Not both sides of a relationship can be the owner [class: "
 									+ classDef.getClassName()
 									+ ", reference to: "
-									+ refDef.getReferenceType()
+									+ refDef.getType()
 									+ "]");				
 					
 				}
@@ -61,14 +61,14 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 							"One side of a relationship must be the owner [class: "
 									+ classDef.getClassName()
 									+ ", reference to: "
-									+ refDef.getReferenceType()
+									+ refDef.getType()
 									+ "]");		
 					
 				}
 
 			} else if (refDef.getRelationshipType() == RelationshipType.manyToOne) {
 
-				ClassDefinition referencedClass = projectDef.getClassDefinitionByName(refDef.getReferenceType());
+				ClassDefinition referencedClass = projectDef.getClassDefinitionByName(refDef.getType());
 				ListDefinition listRef = referencedClass.getListOfType(classDef.getClassName());
 
 				// just double checking
@@ -79,7 +79,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 									+ "which does not define a list of this type [class: "
 									+ classDef.getClassName()
 									+ ", reference to: "
-									+ refDef.getReferenceType()
+									+ refDef.getType()
 									+ "]");
 					
 				}

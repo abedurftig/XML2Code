@@ -7,7 +7,7 @@ import com.xml2code.core.types.FieldType;
  * 
  * @author dasnervtdoch
  */
-public class FieldDefinition {
+public class FieldDefinition implements IMemberDefinition {
 
 	/**
 	 * The name of the field.
@@ -60,12 +60,18 @@ public class FieldDefinition {
 	/**
 	 * @return the name of the field
 	 */
-	public String getFieldName() {
+	public String getName() {
 		
-		return fieldName;
+		return this.fieldName;
 		
 	}
 
+	public String getType() {
+		
+		return this.fieldType.toString();
+		
+	}
+	
 	/**
 	 * @return the type of the field
 	 */

@@ -16,7 +16,10 @@ public final class TemplateUtil {
 
 	private static final String JAVA_DOMAIN_OBJECT_IMPL_FIELD = 		JAVA_P_PATH + "field.partial.template";
 	private static final String JAVA_DOMAIN_OBJECT_IMPL_REFERENCE = 	JAVA_P_PATH + "reference.partial.template";
+	private static final String JAVA_DOMAIN_OBJECT_IMPL_LIST = 			JAVA_P_PATH + "list.partial.template";
 	private static final String JAVA_DOMAIN_OBJECT_IMPL_GETTER_SETTER = JAVA_P_PATH + "gettersetter.partial.template";
+	private static final String JAVA_DOMAIN_OBJECT_IMPL_INIT_LIST = 	JAVA_P_PATH + "initlist.partial.template";
+	private static final String JAVA_DOMAIN_OBJECT_IMPL_CONSTRUCTOR = 	JAVA_P_PATH + "constructor.partial.template";
 
 	// ------------------------------------------
 	// Template cache
@@ -59,12 +62,27 @@ public final class TemplateUtil {
 	public static String getJavaPartialReferenceTemplate() {
 		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL_REFERENCE);
 	}
+	
+	/**
+	 * @return the template for domain object class list
+	 */
+	public static String getJavaPartialListTemplate() {
+		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL_LIST);
+	}
 
 	/**
 	 * @return the template for domain object class getter / setter
 	 */
 	public static String getJavaPartialGetterSetterTemplate() {
 		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL_GETTER_SETTER);
+	}
+	
+	public static String getJavaPartialInitListTemplate() {
+		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL_INIT_LIST);
+	}
+
+	public static String getJavaPartialConstructorTemplate() {
+		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL_CONSTRUCTOR);
 	}
 
 	// ------------------------------------------
@@ -88,6 +106,5 @@ public final class TemplateUtil {
 		}
 		
 	}
-
 
 }

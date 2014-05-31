@@ -8,7 +8,7 @@ import com.xml2code.core.types.RelationshipType;
  * 
  * @author dasnervtdoch
  */
-public class ReferenceDefinition {
+public class ReferenceDefinition implements IMemberDefinition {
 
 	/**
 	 * The name of this reference.
@@ -68,14 +68,14 @@ public class ReferenceDefinition {
 	/**
 	 * @return the referenceName
 	 */
-	public String getReferenceName() {
+	public String getName() {
 		return referenceName;
 	}
 
 	/**
 	 * @return the referenceType
 	 */
-	public String getReferenceType() {
+	public String getType() {
 		return referenceType;
 	}
 	

@@ -104,12 +104,12 @@ public class ProjectDefinitionValidator implements IProjectDefinitionValidator {
 		// reference definitions
 		for (ReferenceDefinition referenceDef : classDef.getReferenceDefinitions()) {
 			
-			existingDependencies = requiredTypes.get(referenceDef.getReferenceType());
+			existingDependencies = requiredTypes.get(referenceDef.getType());
 			
 			if (existingDependencies == null) {
 				
 				existingDependencies = new HashSet<String>();
-				requiredTypes.put(referenceDef.getReferenceType(), existingDependencies);
+				requiredTypes.put(referenceDef.getType(), existingDependencies);
 				
 			}
 			
@@ -120,12 +120,12 @@ public class ProjectDefinitionValidator implements IProjectDefinitionValidator {
 		// list definitions
 		for (ListDefinition listDef : classDef.getListDefinitions()) {
 			
-			existingDependencies = requiredTypes.get(listDef.getListItemType());
+			existingDependencies = requiredTypes.get(listDef.getType());
 			
 			if (existingDependencies == null) {
 				
 				existingDependencies = new HashSet<String>();
-				requiredTypes.put(listDef.getListItemType(), existingDependencies);
+				requiredTypes.put(listDef.getType(), existingDependencies);
 				
 			}
 			
