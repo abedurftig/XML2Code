@@ -20,7 +20,8 @@ public class Main {
 		ListDefinition addresses = new ListDefinition("addresses", "Address");
 		FieldDefinition firstName = new FieldDefinition("firstName", FieldType.shorttext, true, true);
 		ReferenceDefinition jobRef = new ReferenceDefinition("job", "Job", false);
-		
+		ReferenceDefinition contactRef = new ReferenceDefinition("contact", "Contact", true);
+		contactRef.setOwner(false);
 		
 		ClassDefinition contact = new ClassDefinition(projectDefinition, "Contact", "", "This is the contact class");
 		ClassDefinition address = new ClassDefinition(projectDefinition, "Address", "", "This is the address class");
@@ -30,6 +31,8 @@ public class Main {
 		person.getReferenceDefinitions().add(jobRef);
 		person.getFieldDefinitions().add(firstName);
 		contact.getListDefinitions().add(addresses);
+		
+		address.getReferenceDefinitions().add(contactRef);
 		
 		projectDefinition.getClassDefinitions().add(contact);
 		projectDefinition.getClassDefinitions().add(person);

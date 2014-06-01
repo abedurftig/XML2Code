@@ -117,8 +117,8 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 
 	protected String generateClassAnnotations(ClassDefinition classDefinition) {
 
-		// TODO: finish implementation
-		return "";
+		IAnnotationGenerator annotationGenerator = GeneratorFactory.getAnnotationGenerator();
+		return annotationGenerator.getClassAnnotations(classDefinition);
 
 	}
 
@@ -168,26 +168,26 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 
 	protected String generateFields(ClassDefinition classDefinition) throws UnsupportedFieldTypeException {
 
-		return generateMembers(classDefinition.getFieldDefinitions(), 
+		return generateMembers(classDefinition, classDefinition.getFieldDefinitions(), 
 				TemplateUtil.getJavaPartialFieldTemplate());
 
 	}
 
 	protected String generateReferences(ClassDefinition classDefinition) {
 
-		return generateMembers(classDefinition.getReferenceDefinitions(), 
+		return generateMembers(classDefinition, classDefinition.getReferenceDefinitions(), 
 				TemplateUtil.getJavaPartialReferenceTemplate());
 
 	}
 	
 	protected String generateLists(ClassDefinition classDefinition) {
 
-		return generateMembers(classDefinition.getListDefinitions(), 
+		return generateMembers(classDefinition, classDefinition.getListDefinitions(), 
 				TemplateUtil.getJavaPartialListTemplate());
 
 	}
 
-	protected String generateMembers(List<? extends IMemberDefinition> members, String template) {
+	protected String generateMembers(ClassDefinition classDefinition, List<? extends IMemberDefinition> members, String template) {
 		
 		IAnnotationGenerator annotationGenerator = GeneratorFactory.getAnnotationGenerator();
 		
@@ -203,7 +203,7 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 
 			memberDefinition = iterator.next();
 			code = template;
-			annotations = annotationGenerator.getMemberAnnotations(memberDefinition);
+			annotations = annotationGenerator.getMemberAnnotations(memberDefinition, classDefinition);
 			replacementInstructions = ReplacementInstructions.getMemberInstructions(memberDefinition, annotations);
 			code = Replacer.replace(code, replacementInstructions);
 			output.append(code);

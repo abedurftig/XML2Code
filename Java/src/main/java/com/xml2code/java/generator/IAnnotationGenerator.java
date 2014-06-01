@@ -7,6 +7,6 @@ public interface IAnnotationGenerator {
 
 	public String getClassAnnotations(ClassDefinition classDefinition);
 	
-	public String getMemberAnnotations(IMemberDefinition memberDefinition);
+	public String getMemberAnnotations(IMemberDefinition memberDefinition, ClassDefinition classDefinition);
 
 }
