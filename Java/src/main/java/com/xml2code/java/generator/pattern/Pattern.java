@@ -4,8 +4,12 @@ public final class Pattern {
 
 	private Pattern() {}
 
+	public static final String APP = "(<<app>>)";
 	public static final String PACKAGE = "(<<package>>)";
 	public static final String CLASS_NAME = "(<<class>>)";
+	public static final String CLASSES_NAME = "(<<classes>>)";
+	public static final String CLASS_INSTANCE = "(<<instance>>)";
+	public static final String CLASS_INSTANCES = "(<<instances>>)";
 	public static final String DESC = "(<<description>>)";
 	public static final String IMPORTS = "(<<imports>>)";
 	public static final String SUPER = "(<<super>>)";

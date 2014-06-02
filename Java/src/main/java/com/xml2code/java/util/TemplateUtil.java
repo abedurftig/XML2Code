@@ -13,7 +13,12 @@ public final class TemplateUtil {
 	
 	private static final String JAVA_DOMAIN_OBJECT = 	  JAVA_PATH + "DomainObject.java.template";
 	private static final String JAVA_DOMAIN_OBJECT_IMPL = JAVA_PATH + "DomainObjectImpl.java.template";
-
+	private static final String JAVA_CONTROLLER = 	  	  JAVA_PATH + "Controller.java.template";
+	private static final String JAVA_CONTROLLER_IMPL = 	  JAVA_PATH + "ControllerImpl.java.template";
+	private static final String JAVA_JSON_REST_API = 	  JAVA_PATH + "JsonRestApi.java.template";
+	private static final String JAVA_JSON_REST_API_IMPL = JAVA_PATH + "JsonRestApiImpl.java.template";
+	
+	
 	private static final String JAVA_DOMAIN_OBJECT_IMPL_FIELD = 		JAVA_P_PATH + "field.partial.template";
 	private static final String JAVA_DOMAIN_OBJECT_IMPL_REFERENCE = 	JAVA_P_PATH + "reference.partial.template";
 	private static final String JAVA_DOMAIN_OBJECT_IMPL_LIST = 			JAVA_P_PATH + "list.partial.template";
@@ -43,6 +48,34 @@ public final class TemplateUtil {
 	 */
 	public static String getJavaDomainObjectImplTemplate() {
 		return getTemplate(JAVA_DOMAIN_OBJECT_IMPL);
+	}
+	
+	/**
+	 * @return the template for the controller base class
+	 */
+	public static String getJavaControllerTemplate() {
+		return getTemplate(JAVA_CONTROLLER);
+	}
+	
+	/**
+	 * @return the template for the controller implementation class
+	 */
+	public static String getJavaControllerImplTemplate() {
+		return getTemplate(JAVA_CONTROLLER_IMPL);
+	}
+	
+	/**
+	 * @return the template for the JSON REST API base class
+	 */
+	public static String getJavaJsonRestApiTemplate() {
+		return getTemplate(JAVA_JSON_REST_API);
+	}
+	
+	/**
+	 * @return the template for the JSON REST API implementation class
+	 */
+	public static String getJavaJsonRestApiImplTemplate() {
+		return getTemplate(JAVA_JSON_REST_API_IMPL);
 	}
 
 	// ------------------------------------------

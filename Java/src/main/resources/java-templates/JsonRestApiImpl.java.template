@@ -1,0 +1,137 @@
+package <<app>>.rest.impl;
+
+import java.lang.Exception;
+
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.json.JSONArray;
+
+import <<app>>.domain.<<class>>;
+import <<app>>.controller.impl.<<class>>Controller;
+import <<app>>.rest.RestAPI;
+import <<app>>.util.JSONUtil;
+
+@Path("/<<instance>>")
+public class <<class>>API implements RestAPI {
+
+	private <<class>>Controller controller = <<class>>Controller.getInstance();
+
+    @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response getAll() {
+    	
+    	System.out.println("/<<instance>>/all");
+    	
+    	try {
+    	
+			List<<<class>>> all<<classes>> = controller.getAll();
+			JSONArray response = JSONUtil.getJSONArray(all<<classes>>);
+        	return Response.ok(response.toString()).build();
+        
+        } catch (Exception e) {
+        	return Response.serverError().build();
+        }
+		
+	}
+
+    @GET
+    @Path("/get/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response getById(@PathParam("id") long id) {
+		
+		System.out.println("/<<instance>>/get/" + id);
+		
+		try {
+    	
+    		<<class>> <<instance>> = controller.getById(id); 
+			return Response.ok(<<instance>>.toJSON()).build();
+        
+        } catch (Exception e) {
+        	return Response.serverError().build();
+        }
+		
+	}
+
+    @DELETE
+    @Path("/delete/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response deleteById(@PathParam("id") long id) {
+
+		System.out.println("/<<instance>>/delete/" + id);
+
+		try {
+    	
+    		<<class>> <<instance>> = controller.getById(id);
+    		controller.delete(<<instance>>); 
+			return Response.ok("{\"response\":\"OK\"}").build();
+        
+        } catch (Exception e) {
+        	return Response.serverError().build();
+        }
+		
+	}
+
+    @PUT
+    @Path("/add")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response add(String obj) {
+
+		System.out.println("/<<instance>>/add");
+
+		try {
+    	
+    		<<class>> <<instance>> = (<<class>>) <<class>>.fromJSON(<<class>>.class, obj);
+    		<<instance>> = controller.save(<<instance>>);
+    		return Response.ok(<<instance>>.toJSON()).build();
+        
+        } catch (Exception e) {
+        	return Response.serverError().build();
+        }
+
+	}
+    
+    @PUT
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response update(String obj) {
+
+		System.out.println("/<<instance>>/update");
+
+		try {
+    	
+    		<<class>> <<instance>> = (<<class>>) <<class>>.fromJSON(<<class>>.class, obj);
+    		controller.update(<<instance>>);
+    		return Response.ok(<<instance>>.toJSON()).build();
+        
+        } catch (Exception e) {
+        	return Response.serverError().build();
+        }
+
+	}
+
+    @PUT
+    @Path("/updateall")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response updateAll(String objs) {
+	
+		System.out.println("/<<instance>>/updateall");
+	
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,35 @@
+package <<app>>.controller.impl;
+
+import java.util.List;
+
+import <<app>>.domain.<<class>>;
+
+import <<app>>.controller.DomainObjectController;
+
+public class <<class>>Controller extends DomainObjectController<<<class>>> {
+	
+	private static <<class>>Controller instance = null;
+	
+	private <<class>>Controller() {}
+	
+	public static <<class>>Controller getInstance() {
+		
+		if (instance == null) {
+			instance = new <<class>>Controller();
+		}
+		
+		return instance;
+		
+	}
+	
+	@Override
+	public List<<<class>>> getAll() {
+		return getAll(<<class>>.class);
+	}
+
+	@Override
+	public <<class>> getById(long id) {
+		return getById(<<class>>.class, id);
+	}
+	
+}

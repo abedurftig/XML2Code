@@ -1,0 +1,173 @@
+package <<app>>.controller;
+
+import java.util.Date;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+
+import <<app>>.domain.DomainObject;
+
+import xml2code.java.shared.reflection.ReflectionUtil;
+import xml2code.java.shared.hibernate.util.HibernateUtil;
+
+public abstract class DomainObjectController<T extends DomainObject> {
+
+	/**
+	 * The session factory used for all controllers.
+	 */
+	private static SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+	
+	/**
+	 * Returns a list of all domain object of the type managed by the controller.
+	 * To be implemented by the inheriting controller.
+	 * 
+	 * @return a list of all domain object of type T
+	 */
+	public abstract List<T> getAll();
+	
+	/**
+	 * Get a domain object of the type managed by the controller by the specified id.
+	 * 
+	 * @param id
+	 * @return the domain object of type T with the specified id
+	 */
+	public abstract T getById(long id);
+
+	/**
+	 * Delete the domain object from the persistent storage.
+	 * 
+	 * @param obj the domain object to be deleted
+	 */
+	public void delete(T obj) {
+		
+		Transaction trans = sessionFactory.getCurrentSession().beginTransaction();
+		sessionFactory.getCurrentSession().delete(obj);
+		trans.commit();
+		
+	}
+	
+	/**
+	 * Update the domain object in the persistent storage.
+	 * 
+	 * @param obj the domain object to be updated
+	 */
+	public void update(T obj) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		Transaction trans = session.beginTransaction();
+		updateGraph(obj, session);
+		sessionFactory.getCurrentSession().saveOrUpdate(obj);
+		trans.commit();
+		
+	}
+	
+	/**
+	 * Save the domain object in the persistent storage.
+	 * 
+	 * @param obj the domain object to be saved
+	 */
+	public T save(T obj) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		Transaction trans = session.beginTransaction();
+		updateGraph(obj, session);
+		session.save(obj);
+		trans.commit();
+		
+		return obj;
+		
+	}
+	
+	/**
+	 * Returns a list of all domain object of the specified type.
+	 * 
+	 * @param type the domain object class
+	 */
+    @SuppressWarnings("unchecked")
+	protected List<T> getAll(Class<T> type) {
+    	
+    	Session session = sessionFactory.getCurrentSession();
+    	Transaction trans = session.beginTransaction();
+    	Criteria crit = session.createCriteria(type);
+		List<T> all = (List<T>) crit.list();
+		trans.commit();
+        
+        return all;
+        
+      }
+	
+	/**
+	 * Get a domain object of the specified type and id.
+	 * 
+	 * @param type the domain object class
+	 * @param id the id of the domain object
+	 */
+	@SuppressWarnings("unchecked")
+	protected T getById(Class<T> type, long id) {
+		
+		Transaction trans = sessionFactory.getCurrentSession().beginTransaction();
+		T bean = (T) sessionFactory.getCurrentSession().get(type, id);
+		trans.commit();
+		
+		return bean;
+		
+	}
+	
+	// helper methods
+	
+	/**
+	 * 
+	 * @param obj
+	 * @param session
+	 */
+	private void updateGraph(T obj, Session session) {
+		
+		ReflectionUtil.populateBackReferences(obj);
+		setPublicId(obj, session);
+		obj.updateTimeStamps();
+		
+		List<T> domainObjectsInGraph = new ArrayList<T>();
+		ReflectionUtil.getDomainObjectsInGraph(obj, domainObjectsInGraph);
+		
+		for (T domainObject : domainObjectsInGraph) {
+			domainObject.updateTimeStamps();
+			setPublicId(domainObject, session);
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @param obj
+	 * @param session
+	 */
+	private void setPublicId(T obj, Session session) {
+		
+		String publicId = obj.getPublicId();
+		if (publicId == null || publicId.isEmpty()) {
+			Criteria crit = session.createCriteria(obj.getClass());
+			Integer totalResult = ((Number) crit.setProjection(Projections.rowCount()).uniqueResult()).intValue();
+			obj.setPublicId(getEntityName(obj) + ":" + (totalResult + 1));
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @param obj
+	 * @return
+	 */
+	private String getEntityName(T obj) {
+		
+		String classNameWithPackage = obj.getClass().toString();
+		int dotIndex = classNameWithPackage.lastIndexOf(".");
+		String className = classNameWithPackage.substring(dotIndex + 1).toLowerCase();
+		return className;
+		
+	}
+	
+}

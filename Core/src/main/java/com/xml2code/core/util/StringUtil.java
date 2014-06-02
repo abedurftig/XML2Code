@@ -2,7 +2,7 @@ package com.xml2code.core.util;
 
 public class StringUtil {
 
-	public String getPlural(String singular) {
+	public static String getPlural(String singular) {
 
 		if (singular.endsWith("y")) {
 

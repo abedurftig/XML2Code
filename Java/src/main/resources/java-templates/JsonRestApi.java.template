@@ -1,0 +1,19 @@
+package <<app>>.rest;
+
+import javax.ws.rs.core.Response;
+
+public interface RestAPI {
+
+	public Response getAll();
+	
+	public Response getById(long id);
+	
+	public Response deleteById(long id);
+	
+	public Response add(String obj);
+	
+	public Response update(String obj);
+	
+	public Response updateAll(String objs);
+	
+}
