@@ -7,6 +7,7 @@ import com.xml2code.java.generator.impl.AnnotationGenerator;
 import com.xml2code.java.generator.impl.ControllerClassGenerator;
 import com.xml2code.java.generator.impl.DomainClassGenerator;
 import com.xml2code.java.generator.impl.JsonRestApiGenerator;
+import com.xml2code.java.generator.impl.ResourceFileGenerator;
 
 public class GeneratorFactory {
 
@@ -72,7 +73,7 @@ public class GeneratorFactory {
 		
 		if (resourceFileGenerator == null) {
 			
-			//resourceFileGenerator = new ResourceFileGenerator();
+			resourceFileGenerator = new ResourceFileGenerator();
 			
 		}
 		

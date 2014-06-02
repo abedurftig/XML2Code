@@ -7,6 +7,7 @@ import com.xml2code.core.util.LoggerUtil;
 import com.xml2code.java.exception.JavaProjectCreationFailedException;
 import com.xml2code.java.factory.GeneratorFactory;
 import com.xml2code.java.generator.ClassGenerator;
+import com.xml2code.java.generator.IResourceFileGenerator;
 
 public class ProjectCreator {
 
@@ -14,15 +15,22 @@ public class ProjectCreator {
 	
 	public static void createJavaProject(ProjectDefinition projectDef) throws JavaProjectCreationFailedException {
 
-		String javaProjectPath = projectDef.getTargetDir() + "/Java";
+		String javaProjectPath = getJavaProjectPath(projectDef);
 		String srcPath = javaProjectPath + "/src/main/java/com/" + projectDef.getProjectName().toLowerCase();
-
+		String resourcePath = javaProjectPath + "/src/main/resources";
+		
 		generateDomain(projectDef, srcPath);
 		generateController(projectDef, srcPath);
 		generateJsonRestApi(projectDef, srcPath);
-		
+		generateResources(projectDef, resourcePath);
 	}
 
+	public static String getJavaProjectPath(ProjectDefinition projectDefinition) {
+		
+		return projectDefinition.getTargetDir() + "/" + projectDefinition.getProjectName();
+		
+	}
+	
 	private static void generateDomain(ProjectDefinition projectDef, String srcPath) throws JavaProjectCreationFailedException {
 
 		LoggerUtil.getApplicationLogger().info("--------------------------------");
@@ -65,6 +73,18 @@ public class ProjectCreator {
 
 		classGenerator.generateBaseClass(projectDef, packagePath);
 		classGenerator.generateImplementationClasses(projectDef, packagePath);
+		
+	}
+	
+	private static void generateResources(ProjectDefinition projectDef, String resourcePath) throws JavaProjectCreationFailedException {
+		
+		LoggerUtil.getApplicationLogger().info("-----------------------------------");
+		LoggerUtil.getApplicationLogger().info("generating aditional resource files");
+		LoggerUtil.getApplicationLogger().info("-----------------------------------");
+		
+		IResourceFileGenerator resourceFileGenerator = GeneratorFactory.getResourceFileGenerator();
+		
+		resourceFileGenerator.generateResourceFiles(projectDef, resourcePath);
 		
 	}
 	

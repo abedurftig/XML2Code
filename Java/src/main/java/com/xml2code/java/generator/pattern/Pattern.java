@@ -25,5 +25,13 @@ public final class Pattern {
 	public static final String SETTER = "(<<setter>>)";
 	public static final String CONSTRUCTOR = "(<<constructor>>)";
 	public static final String INIT_LISTS = "(<<initLists>>)";
-
+	
+	public static final String XML_GROUP_ID = 	  "(@@@groupId@)";
+	public static final String XML_ARTIFACT_ID =  "(@@@artifactId@)";
+	public static final String XML_NAME = 		  "(@@@name@)";
+	public static final String XML_FINAL_NAME =   "(@@@finalName@)";
+	public static final String XML_DEPENDENCIES = "(@@@dependencies@)";
+	public static final String XML_MAPPINGS = 	  "(@@@mappings@)";
+	public static final String XML_URL = 	  	  "(@@@url@)";
+	public static final String XML_SERVLETS = 	  "(@@@servlets@)";
 }

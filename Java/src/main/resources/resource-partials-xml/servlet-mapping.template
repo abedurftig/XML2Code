@@ -1,0 +1,4 @@
+	<servlet-mapping>
+		<servlet-name>@@@name@@@</servlet-name>
+		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
