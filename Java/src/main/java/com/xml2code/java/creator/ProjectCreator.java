@@ -17,25 +17,18 @@ public class ProjectCreator {
 		String javaProjectPath = projectDef.getTargetDir() + "/Java";
 		String srcPath = javaProjectPath + "/src/main/java/com/" + projectDef.getProjectName().toLowerCase();
 
-		LoggerUtil.getApplicationLogger().info("--------------------------------");
-		LoggerUtil.getApplicationLogger().info("generating domain object classes");
-		LoggerUtil.getApplicationLogger().info("--------------------------------");
 		generateDomain(projectDef, srcPath);
-		
-		LoggerUtil.getApplicationLogger().info("-----------------------------");
-		LoggerUtil.getApplicationLogger().info("generating controller classes");
-		LoggerUtil.getApplicationLogger().info("-----------------------------");
 		generateController(projectDef, srcPath);
-
-		LoggerUtil.getApplicationLogger().info("--------------------------------");
-		LoggerUtil.getApplicationLogger().info("generating JSON REST API classes");
-		LoggerUtil.getApplicationLogger().info("--------------------------------");
 		generateJsonRestApi(projectDef, srcPath);
 		
 	}
 
 	private static void generateDomain(ProjectDefinition projectDef, String srcPath) throws JavaProjectCreationFailedException {
 
+		LoggerUtil.getApplicationLogger().info("--------------------------------");
+		LoggerUtil.getApplicationLogger().info("generating domain object classes");
+		LoggerUtil.getApplicationLogger().info("--------------------------------");
+		
 		String packagePath = srcPath + "/domain";
 
 		ClassGenerator classGenerator = GeneratorFactory.getDomainClassGenerator();
@@ -47,9 +40,13 @@ public class ProjectCreator {
 	
 	private static void generateController(ProjectDefinition projectDef, String srcPath) throws JavaProjectCreationFailedException {
 		
+		LoggerUtil.getApplicationLogger().info("-----------------------------");
+		LoggerUtil.getApplicationLogger().info("generating controller classes");
+		LoggerUtil.getApplicationLogger().info("-----------------------------");
+		
 		String packagePath = srcPath + "/controller";
 		
-		ClassGenerator classGenerator = GeneratorFactory.getDomainClassGenerator();
+		ClassGenerator classGenerator = GeneratorFactory.getControllerClassGenerator();
 
 		classGenerator.generateBaseClass(projectDef, packagePath);
 		classGenerator.generateImplementationClasses(projectDef, packagePath);
@@ -57,10 +54,14 @@ public class ProjectCreator {
 	}
 	
 	private static void generateJsonRestApi(ProjectDefinition projectDef, String srcPath) throws JavaProjectCreationFailedException {
+
+		LoggerUtil.getApplicationLogger().info("--------------------------------");
+		LoggerUtil.getApplicationLogger().info("generating JSON REST API classes");
+		LoggerUtil.getApplicationLogger().info("--------------------------------");
 		
 		String packagePath = srcPath + "/rest";
 		
-		ClassGenerator classGenerator = GeneratorFactory.getDomainClassGenerator();
+		ClassGenerator classGenerator = GeneratorFactory.getJsonRestApiGenerator();
 
 		classGenerator.generateBaseClass(projectDef, packagePath);
 		classGenerator.generateImplementationClasses(projectDef, packagePath);
