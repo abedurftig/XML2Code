@@ -34,7 +34,7 @@ public class ManyToOne extends Annotation implements ReferenceAnnotation {
 	 * @see com.xml2java.app.annotations.Annotation#getAnnotationCode()
 	 */
 	@Override
-	public String getAnnotationCode() {
+	public String getCode() {
 	
 	    return "@ManyToOne(fetch = FetchType.LAZY)" + StringConstants.NEW_LINE +
 	    	   "\t@JoinColumn(name=\"" + getJoinColumnName()  + "\")";

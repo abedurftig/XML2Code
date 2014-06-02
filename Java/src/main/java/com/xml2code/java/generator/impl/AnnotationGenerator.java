@@ -10,10 +10,13 @@ import com.xml2code.core.definition.IMemberDefinition;
 import com.xml2code.core.definition.ListDefinition;
 import com.xml2code.core.definition.ProjectDefinition;
 import com.xml2code.core.definition.ReferenceDefinition;
+import com.xml2code.core.types.FieldType;
 import com.xml2code.core.types.RelationshipType;
 import com.xml2code.core.util.StringConstants;
 import com.xml2code.java.annotation.Annotation;
 import com.xml2code.java.annotation.ReferenceAnnotation;
+import com.xml2code.java.annotation.jackson.JsonDateDeserialize;
+import com.xml2code.java.annotation.jackson.JsonDateSerialize;
 import com.xml2code.java.annotation.jackson.JsonIgnore;
 import com.xml2code.java.annotation.jpa.Column;
 import com.xml2code.java.annotation.jpa.Entity;
@@ -30,7 +33,7 @@ public class AnnotationGenerator implements IAnnotationGenerator {
 
 		StringBuffer output = new StringBuffer();
 		
-		output.append(new Entity(classDefinition).getAnnotationCode());
+		output.append(new Entity(classDefinition).getCode());
 	
 		return output.toString();
 
@@ -60,7 +63,15 @@ public class AnnotationGenerator implements IAnnotationGenerator {
 
 		StringBuffer output = new StringBuffer();
 		
-		output.append(new Column(fieldDefinition).getAnnotationCode());
+		if (fieldDefinition.getFieldType() == FieldType.date ||
+			fieldDefinition.getFieldType() == FieldType.datetime) {
+			
+			output.append(new JsonDateSerialize(fieldDefinition).getCode() + StringConstants.NEW_LINE_INDENT);
+			output.append(new JsonDateDeserialize(fieldDefinition).getCode() + StringConstants.NEW_LINE_INDENT);
+				
+		}
+		
+		output.append(new Column(fieldDefinition).getCode());
 		
 		return output.toString();
 
@@ -117,7 +128,7 @@ public class AnnotationGenerator implements IAnnotationGenerator {
 		Iterator<ReferenceAnnotation> iterator = annotations.iterator();
 		while (iterator.hasNext()) {
 			
-			output.append(((Annotation) iterator.next()).getAnnotationCode());
+			output.append(((Annotation) iterator.next()).getCode());
 			if (iterator.hasNext()) {
 				output.append(StringConstants.NEW_LINE + StringConstants.INDENT);
 			}
@@ -139,7 +150,7 @@ public class AnnotationGenerator implements IAnnotationGenerator {
 			ReferenceDefinition backRef = ownedEntity.getReferenceOfType(classDefinition.getClassName());
 			String mappedBy = backRef.getName();
 			
-			output.append(new OneToMany(listDefinition, mappedBy).getAnnotationCode());
+			output.append(new OneToMany(listDefinition, mappedBy).getCode());
 			
 		}
 		

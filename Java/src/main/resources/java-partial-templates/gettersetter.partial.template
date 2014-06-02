@@ -3,7 +3,7 @@
 	 * @return the <<name>>
 	 */
 	public <<type>> <<getter>>() {
-		return <<name>>;
+		return this.<<name>>;
 	}
 	
 	/**

@@ -31,7 +31,7 @@ public class Column extends JpaAnnotation implements FieldAnnotation {
 	 * (non-Javadoc)
 	 * @see com.xml2java.app.annotations.Annotation#getAnnotationCode()
 	 */
-	public String getAnnotationCode() {
+	public String getCode() {
 		
 		String code = "@Column(" +
 					   "name = \"" + getColumnName() + "\", " +

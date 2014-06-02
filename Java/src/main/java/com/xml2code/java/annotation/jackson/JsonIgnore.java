@@ -30,7 +30,7 @@ public class JsonIgnore extends JacksonAnnotation implements ReferenceAnnotation
 	 * (non-Javadoc)
 	 * @see com.xml2java.app.annotation.Annotation#getAnnotationCode()
 	 */
-	public String getAnnotationCode() {
+	public String getCode() {
 
 		return "@JsonIgnore";
 

@@ -2,15 +2,15 @@ package com.xml2code.core.definition;
 
 public class InstructionsDefinition {
 
-	private boolean generateJava = false;
+	private boolean generateJava = true;
 	
-	private boolean generateRelationalMapping = false;
+	private boolean generateRelationalMapping = true;
 	
-	private boolean generateApi = false;
+	private boolean generateApi = true;
 	
-	private boolean generateValidation = false;
+	private boolean generateValidation = true;
 	
-	private boolean generateWeb = false;
+	private boolean generateWeb = true;
 
 	/**
 	 * @return the generateJava

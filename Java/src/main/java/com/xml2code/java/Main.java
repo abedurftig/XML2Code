@@ -19,7 +19,12 @@ public class Main {
 
 		ListDefinition addresses = new ListDefinition("addresses", "Address");
 		FieldDefinition firstName = new FieldDefinition("firstName", FieldType.shorttext, true, true);
+		
+		FieldDefinition aDate = new FieldDefinition("aDate", FieldType.date, false);
+		FieldDefinition aDateTime = new FieldDefinition("aDateTime", FieldType.datetime, false);
+		
 		ReferenceDefinition jobRef = new ReferenceDefinition("job", "Job", false);
+		jobRef.setOwner(true);
 		ReferenceDefinition contactRef = new ReferenceDefinition("contact", "Contact", true);
 		contactRef.setOwner(false);
 		
@@ -30,6 +35,9 @@ public class Main {
 		
 		person.getReferenceDefinitions().add(jobRef);
 		person.getFieldDefinitions().add(firstName);
+		person.getFieldDefinitions().add(aDate);
+		person.getFieldDefinitions().add(aDateTime);
+		
 		contact.getListDefinitions().add(addresses);
 		
 		address.getReferenceDefinitions().add(contactRef);

@@ -61,7 +61,7 @@ public class ReferenceDefinition implements IMemberDefinition {
 		this.required = required;
 		this.unidirectional = true;
 		this.relationshipType = RelationshipType.oneToOne;
-		this.owner = true;
+		this.owner = false;
 		
 	}
 

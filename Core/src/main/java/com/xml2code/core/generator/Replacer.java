@@ -2,6 +2,8 @@ package com.xml2code.core.generator;
 
 import java.util.List;
 
+import com.xml2code.core.util.StringConstants;
+
 public class Replacer {
 
 	private Replacer() {}
@@ -21,6 +23,8 @@ public class Replacer {
 			}
 
 		}
+		
+		original = original.replaceAll(StringConstants.TRIPPLE_NEW_LINE, StringConstants.DOUBLE_NEW_LINE);
 
 		return original;
 

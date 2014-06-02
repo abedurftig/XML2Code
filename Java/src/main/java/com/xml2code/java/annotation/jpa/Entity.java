@@ -32,7 +32,7 @@ public class Entity extends JpaAnnotation implements ClassAnnotation {
 	 * @see com.xml2java.app.annotations.Annotation#getAnnotationCode()
 	 */
 	@Override
-	public String getAnnotationCode() {
+	public String getCode() {
 		
 		String line = "";
 		

@@ -35,7 +35,7 @@ public class OneToOne extends Annotation implements ReferenceAnnotation {
 	 * @see com.xml2java.app.annotations.Annotation#getAnnotationCode()
 	 */
 	@Override
-	public String getAnnotationCode() {
+	public String getCode() {
 		
 		return "@OneToOne(cascade = CascadeType.ALL)" + StringConstants.NEW_LINE +
 			   "\t@JoinColumn(name=\"" + getJoinColumnName()  + "\")";

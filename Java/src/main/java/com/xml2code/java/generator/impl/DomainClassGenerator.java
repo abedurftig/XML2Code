@@ -3,8 +3,12 @@ package com.xml2code.java.generator.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.xml2code.core.definition.ClassDefinition;
 import com.xml2code.core.definition.IMemberDefinition;
@@ -107,7 +111,7 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 
 		for (String statement : importStatements) {
 
-			imports.append(statement + StringConstants.NEW_LINE);
+			imports.append(statement);
 
 		}
 
@@ -129,7 +133,7 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 		for (int i = 0; i < classDefinition.getListDefinitions().size(); i++) {
 			
 			if (i > 0) {
-				lists.append("\t");
+				lists.append(StringConstants.INDENT);
 			}
 			
 			ListDefinition listDef = classDefinition.getListDefinitions().get(i);
@@ -243,35 +247,101 @@ public class DomainClassGenerator implements IDomainClassGenerator {
 	private List<String> getRequiredImportStatements(InstructionsDefinition instructionsDefinition,
 													 ClassDefinition classDefinition) {
 
-		List<String> importStatements = new ArrayList<String>();
-
+		Map<String, Set<String>> importStatements = new HashMap<String, Set<String>>();
+		Set<String> javaUtil = getImportsForPackage(importStatements, "java.util");
+		Set<String> javaShared = getImportsForPackage(importStatements, "com.xml2code.java.shared");
+		Set<String> jackson = getImportsForPackage(importStatements, "org.codehaus.jackson");
+		Set<String> javaMath = getImportsForPackage(importStatements, "java.math");
+		Set<String> javax = getImportsForPackage(importStatements, "javax");
+		
 		if (classDefinition.getListDefinitions().size() > 0) {
 
-			importStatements.add("import java.util.List;");
-			importStatements.add("import java.util.ArrayList;");
+			javaUtil.add("import java.util.List;");
+			javaUtil.add("import java.util.ArrayList;");
 
 		}
 
 		if (classDefinition.hasDate()) {
 
-			importStatements.add("import java.util.Date;");
+			javaUtil.add("import java.util.Date;");
+			
+			if (instructionsDefinition.isGenerateApi()) {
+				
+				javaShared.add("import com.xml2code.java.shared.json.DateJsonDeserializer;");
+				javaShared.add("import com.xml2code.java.shared.json.DateJsonSerializer;");
+				
+				jackson.add("import org.codehaus.jackson.map.annotate.JsonDeserialize;");
+				jackson.add("import org.codehaus.jackson.map.annotate.JsonSerialize;");
+				
+			}
+
+		}
+		
+		if (classDefinition.hasDateTime()) {
+
+			javaUtil.add("import java.util.Date;");
+			
+			if (instructionsDefinition.isGenerateApi()) {
+				
+				javaShared.add("import com.xml2code.java.shared.json.DateTimeJsonDeserializer;");
+				javaShared.add("import com.xml2code.java.shared.json.DateTimeJsonSerializer;");
+				
+				jackson.add("import org.codehaus.jackson.map.annotate.JsonDeserialize;");
+				jackson.add("import org.codehaus.jackson.map.annotate.JsonSerialize;");
+				
+			}
 
 		}
 
 		if (classDefinition.hasDecimal()) {
 
-			importStatements.add("import java.math.BigDecimal;");
+			javaMath.add("import java.math.BigDecimal;");
 
 		}
 
 		if (instructionsDefinition.isGenerateRelationalMapping()) {
 
-			importStatements.add("import javax.persistence.*;");
+			javax.add("import javax.persistence.*;");
 
 		}
 
-		return importStatements;
+		List<String> imports = new ArrayList<String>();
+		Iterator<Set<String>> iterator = importStatements.values().iterator();
+		while (iterator.hasNext()) {
+			
+			Iterator<String> importIterator = iterator.next().iterator();
+			while (importIterator.hasNext()) {
+				
+				imports.add(importIterator.next());
+				imports.add(StringConstants.NEW_LINE);
+				
+			}
+			
+			if (iterator.hasNext()) {
 
+				imports.add(StringConstants.NEW_LINE);
+				
+			}
+			
+		}
+		
+		return imports;
+
+	}
+	
+	private Set<String> getImportsForPackage(Map<String, Set<String>> importStatements, String pack) {
+		
+		Set<String> packImports = importStatements.get(pack);
+		
+		if (packImports == null) {
+			
+			packImports = new HashSet<String>();
+			importStatements.put(pack, packImports);
+			
+		}
+		
+		return packImports;
+		
 	}
 
 }

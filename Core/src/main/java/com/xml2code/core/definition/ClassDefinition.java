@@ -105,6 +105,29 @@ public class ClassDefinition {
 		
 	}
 	
+	public boolean equals(Object obj) {
+		
+		if (obj instanceof ClassDefinition) {
+			
+			ClassDefinition other = (ClassDefinition) obj;
+			if (other.className.equals(this.className)) {
+				
+				return true;
+				
+			}
+			
+		}
+		
+		return false;
+		
+	}
+	
+	public int hashCode() {
+		
+		return this.className.hashCode();
+		
+	}
+	
 	// ------------------------------------------
 	// Getters & Setters
 	// ------------------------------------------
@@ -271,12 +294,21 @@ public class ClassDefinition {
 	}
 
 	/**
-	 * Checks whether or not this class definition has a data field.
+	 * Checks whether or not this class definition has a date field.
 	 * 
-	 * @return true if the class definition contains at least field of type data
+	 * @return true if the class definition contains at least field of type date
 	 */
 	public boolean hasDate() {
 		return hasFieldType(FieldType.date);
+	}
+	
+	/**
+	 * Checks whether or not this class definition has a date(time) field.
+	 * 
+	 * @return true if the class definition contains at least field of type datetime
+	 */
+	public boolean hasDateTime() {
+		return hasFieldType(FieldType.datetime);
 	}
 
 	/**

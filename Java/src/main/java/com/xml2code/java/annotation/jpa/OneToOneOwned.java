@@ -32,7 +32,7 @@ public class OneToOneOwned extends Annotation implements ReferenceAnnotation {
 	 * (non-Javadoc)
 	 * @see com.xml2java.app.annotations.Annotation#getAnnotationCode()
 	 */
-	public String getAnnotationCode() {
+	public String getCode() {
 
 		return "@OneToOne(fetch = FetchType.LAZY)";
 

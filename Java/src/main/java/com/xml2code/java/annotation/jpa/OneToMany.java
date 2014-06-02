@@ -37,7 +37,7 @@ public class OneToMany extends Annotation implements ListAnnotation {
 	 * @see com.xml2java.app.annotations.Annotation#getAnnotationCode()
 	 */
 	@Override
-	public String getAnnotationCode() {
+	public String getCode() {
 		
 		return "@OneToMany(fetch = FetchType.EAGER, mappedBy = \"" + 
 			   this.mappedBy +

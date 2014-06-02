@@ -12,6 +12,6 @@ public abstract class Annotation {
 	 * 
 	 * @return the annotation code
 	 */
-	public abstract String getAnnotationCode();
+	public abstract String getCode();
 	
 }
