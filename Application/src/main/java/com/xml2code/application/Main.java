@@ -10,7 +10,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		String projectFolder = "/Users/Arne/Workspaces/Languageschool";
+		String projectFolder = "";
 		
 		try {
 			
