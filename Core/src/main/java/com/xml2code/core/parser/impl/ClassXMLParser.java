@@ -28,8 +28,8 @@ public class ClassXMLParser implements IClassXMLParser {
 
 	private static final String XML_CLASS = "Class";
 	private static final String XML_CLASS_NAME = "className";
-	private static final String XML_CLASS_DESC = "classDescription";
-	private static final String XML_CLASS_SUPER = "superClassName";
+	private static final String XML_CLASS_DESC = "description";
+	private static final String XML_CLASS_SUPER = "superClass";
 	private static final String XML_CLASS_DISPLAY = "displayName";
 	private static final String XML_CLASS_EXPORT = "exportable";
 
@@ -44,7 +44,7 @@ public class ClassXMLParser implements IClassXMLParser {
 	
 	private static final String XML_LIST = "List";
 	private static final String XML_LIST_NAME = "listName";
-	private static final String XML_LIST_ITEM_TYPE = "listItemType";
+	private static final String XML_LIST_ITEM_TYPE = "itemType";
 	
 	private static final String XML_REQUIRED = "required";
 	

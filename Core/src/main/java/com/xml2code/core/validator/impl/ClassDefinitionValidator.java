@@ -85,11 +85,30 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 				}
 
 			} else {
-
+				
 				throw new InvalidModelException(InvalidModelException.INVALID_TYPE,
 						"Reference has the wrong relationship type [type: "
 								+ refDef.getRelationshipType()
 								+ ", references can only be 'oneToOne' or 'manyToOne'");
+				
+			}
+			
+		}
+		
+		for (ListDefinition listDefinition : classDef.getListDefinitions()) {
+			
+			if (listDefinition.getRelationshipType() == RelationshipType.oneToMany) {
+			
+				String typeName = listDefinition.getType();
+				ClassDefinition listItem = projectDef.getClassDefinitionByName(typeName);
+				if (!listItem.hasReferenceToType(classDef.getClassName())) {
+					
+					throw new InvalidModelException(InvalidModelException.INVALID_TYPE,
+							classDef.getClassName() + " has a list of type " + typeName
+							+ ", but " + typeName + " does not define a reference to " 
+							+ classDef.getClassName());
+					
+				}
 				
 			}
 			

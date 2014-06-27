@@ -37,7 +37,7 @@ public abstract class XMLValidator {
 
 		}
 		catch (SAXException e) {
-
+			
 			LOGGER.error("XMLValidator#validateXMLAgainstSchema - " + sourceFile.getSystemId() + " is NOT valid");
 			LOGGER.error("XMLValidator#validateXMLAgainstSchema - Reason: " + e.getLocalizedMessage());
 			throw new XMLValidationException(getErrorMessage(e, xmlFile, mode));

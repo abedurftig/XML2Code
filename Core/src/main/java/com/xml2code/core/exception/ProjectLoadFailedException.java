@@ -1,5 +1,7 @@
 package com.xml2code.core.exception;
 
+import com.xml2code.core.util.StringConstants;
+
 public class ProjectLoadFailedException extends Exception {
 
 	public static final String NO_PROJECT = "Project definition does not exist!";
@@ -26,9 +28,9 @@ public class ProjectLoadFailedException extends Exception {
 		
 		if (rootCause != null) {
 		
-			return super.getMessage() + 
-					" The root cause is a " 
-					+ rootCause.getClass() + ": " 
+			return super.getMessage() + StringConstants.NEW_LINE 
+					+ "The root cause is an exception of class " 
+					+ rootCause.getClass() + ": " + StringConstants.NEW_LINE 
 					+ rootCause.getMessage();
 			
 		} else {

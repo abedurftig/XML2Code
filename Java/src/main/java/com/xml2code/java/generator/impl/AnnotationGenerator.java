@@ -20,6 +20,7 @@ import com.xml2code.java.annotation.jackson.JsonDateSerialize;
 import com.xml2code.java.annotation.jackson.JsonIgnore;
 import com.xml2code.java.annotation.jpa.Column;
 import com.xml2code.java.annotation.jpa.Entity;
+import com.xml2code.java.annotation.jpa.ManyToMany;
 import com.xml2code.java.annotation.jpa.ManyToOne;
 import com.xml2code.java.annotation.jpa.OneToMany;
 import com.xml2code.java.annotation.jpa.OneToOne;
@@ -147,10 +148,24 @@ public class AnnotationGenerator implements IAnnotationGenerator {
 			ProjectDefinition projectDefinition = classDefinition.getProjectDefinition();
 			
 			ClassDefinition ownedEntity = projectDefinition.getClassDefinitionByName(listDefinition.getType());
+			
 			ReferenceDefinition backRef = ownedEntity.getReferenceOfType(classDefinition.getClassName());
 			String mappedBy = backRef.getName();
 			
 			output.append(new OneToMany(listDefinition, mappedBy).getCode());
+			
+		}
+		
+		if (listDefinition.getRelationshipType() == RelationshipType.manyToMany) {
+			
+			ProjectDefinition projectDefinition = classDefinition.getProjectDefinition();
+			
+			ClassDefinition ownedEntity = projectDefinition.getClassDefinitionByName(listDefinition.getType());
+			
+			ListDefinition backRef = ownedEntity.getListOfType(classDefinition.getClassName());
+			String mappedBy = backRef.getName();
+			
+			output.append(new ManyToMany(listDefinition).getCode());
 			
 		}
 		

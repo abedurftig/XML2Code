@@ -52,7 +52,7 @@ public class DomainClassGenerator extends ClassGenerator {
 			String contentFilePath = targetDir + "/" + classDefinition.getClassName() + ".java";
 
 			String importStatements = generateImports(classDefinition.getProjectDefinition().getInstructions(), classDefinition);
-			String annotations = generateClassAnnotations(classDefinition);
+			String annotations = "";//generateClassAnnotations(classDefinition);
 			String fields = generateFields(classDefinition);
 			String references = generateReferences(classDefinition);
 			String lists = generateLists(classDefinition);

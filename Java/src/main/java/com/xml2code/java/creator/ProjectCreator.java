@@ -11,9 +11,10 @@ import com.xml2code.java.generator.IResourceFileGenerator;
 
 public class ProjectCreator {
 
-	protected static Logger LOGGER = LoggerUtil.getApplicationLogger();
+	protected static final Logger LOGGER = LoggerUtil.getApplicationLogger();
 	
-	public static void createJavaProject(ProjectDefinition projectDef) throws JavaProjectCreationFailedException {
+	public static void createJavaProject(ProjectDefinition projectDef) 
+			throws JavaProjectCreationFailedException {
 
 		String javaProjectPath = getJavaProjectPath(projectDef);
 		String srcPath = javaProjectPath + "/src/main/java/com/" + projectDef.getProjectName().toLowerCase();
@@ -26,16 +27,15 @@ public class ProjectCreator {
 	}
 
 	public static String getJavaProjectPath(ProjectDefinition projectDefinition) {
-		
-		return projectDefinition.getTargetDir() + "/" + projectDefinition.getProjectName();
-		
+		return projectDefinition.getTargetDir() + "/" + projectDefinition.getProjectName();	
 	}
 	
-	private static void generateDomain(ProjectDefinition projectDef, String srcPath) throws JavaProjectCreationFailedException {
+	private static void generateDomain(ProjectDefinition projectDef, String srcPath) 
+			throws JavaProjectCreationFailedException {
 
-		LoggerUtil.getApplicationLogger().info("--------------------------------");
-		LoggerUtil.getApplicationLogger().info("generating domain object classes");
-		LoggerUtil.getApplicationLogger().info("--------------------------------");
+		LOGGER.info("--------------------------------");
+		LOGGER.info("generating domain object classes");
+		LOGGER.info("--------------------------------");
 		
 		String packagePath = srcPath + "/domain";
 
@@ -46,11 +46,12 @@ public class ProjectCreator {
 
 	}
 	
-	private static void generateController(ProjectDefinition projectDef, String srcPath) throws JavaProjectCreationFailedException {
+	private static void generateController(ProjectDefinition projectDef, String srcPath) 
+			throws JavaProjectCreationFailedException {
 		
-		LoggerUtil.getApplicationLogger().info("-----------------------------");
-		LoggerUtil.getApplicationLogger().info("generating controller classes");
-		LoggerUtil.getApplicationLogger().info("-----------------------------");
+		LOGGER.info("-----------------------------");
+		LOGGER.info("generating controller classes");
+		LOGGER.info("-----------------------------");
 		
 		String packagePath = srcPath + "/controller";
 		
@@ -61,11 +62,12 @@ public class ProjectCreator {
 		
 	}
 	
-	private static void generateJsonRestApi(ProjectDefinition projectDef, String srcPath) throws JavaProjectCreationFailedException {
+	private static void generateJsonRestApi(ProjectDefinition projectDef, String srcPath) 
+			throws JavaProjectCreationFailedException {
 
-		LoggerUtil.getApplicationLogger().info("--------------------------------");
-		LoggerUtil.getApplicationLogger().info("generating JSON REST API classes");
-		LoggerUtil.getApplicationLogger().info("--------------------------------");
+		LOGGER.info("--------------------------------");
+		LOGGER.info("generating JSON REST API classes");
+		LOGGER.info("--------------------------------");
 		
 		String packagePath = srcPath + "/rest";
 		
@@ -76,11 +78,12 @@ public class ProjectCreator {
 		
 	}
 	
-	private static void generateResources(ProjectDefinition projectDef, String resourcePath) throws JavaProjectCreationFailedException {
+	private static void generateResources(ProjectDefinition projectDef, String resourcePath) 
+			throws JavaProjectCreationFailedException {
 		
-		LoggerUtil.getApplicationLogger().info("-----------------------------------");
-		LoggerUtil.getApplicationLogger().info("generating aditional resource files");
-		LoggerUtil.getApplicationLogger().info("-----------------------------------");
+		LOGGER.info("-----------------------------------");
+		LOGGER.info("generating aditional resource files");
+		LOGGER.info("-----------------------------------");
 		
 		IResourceFileGenerator resourceFileGenerator = GeneratorFactory.getResourceFileGenerator();
 		
