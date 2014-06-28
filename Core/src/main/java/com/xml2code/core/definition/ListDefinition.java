@@ -27,6 +27,15 @@ public class ListDefinition implements IMemberDefinition {
 	private boolean unidirectional;
 	
 	/**
+	 * If this reference is part of a bidirectional relationships this flag
+	 * indicates if this the owning class in the relationship.
+	 * For example a course has many students and a student takes many courses. 
+	 * Every bidirectional relationship requires an owner, 
+	 * otherwise the model is considered invalid. 
+	 */
+	private boolean owner;
+	
+	/**
 	 * The relationship of this list to the owned entity.
 	 */
 	private RelationshipType relationshipType;
@@ -42,6 +51,7 @@ public class ListDefinition implements IMemberDefinition {
 		this.listName = listName;
 		this.listItemType = listItemType;
 		this.unidirectional = false;
+		this.owner = false;
 		this.relationshipType = RelationshipType.oneToMany;
 		
 	}
@@ -88,6 +98,20 @@ public class ListDefinition implements IMemberDefinition {
 		this.unidirectional = unidirectional;
 	}
 
+	/**
+	 * @return the owner
+	 */
+	public boolean isOwner() {
+		return owner;
+	}
+
+	/**
+	 * @param owner the owner to set
+	 */
+	public void setOwner(boolean owner) {
+		this.owner = owner;
+	}
+	
 	/**
 	 * @return the relationshipType
 	 */

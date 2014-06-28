@@ -2,8 +2,8 @@ package com.xml2code.java.annotation.jpa;
 
 import com.xml2code.core.definition.ClassDefinition;
 import com.xml2code.core.util.StringConstants;
+import com.xml2code.core.util.StringUtil;
 import com.xml2code.java.annotation.ClassAnnotation;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * This annotation is added to a class definition. It marks a class as database backed entity
@@ -39,7 +39,7 @@ public class Entity extends JpaAnnotation implements ClassAnnotation {
 		if (classDef.isSuperClass()) {
 			line = "@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)";
 		} else {
-			line = "@Table(name = \"" + getEntityName() + "\")";
+			line = "@Table(name = \"" + StringUtil.joinWithUnderscore(this.classDef.getClassName()) + "\")";
 		}
 		
 		return "@Entity" + StringConstants.NEW_LINE + line;
@@ -54,26 +54,6 @@ public class Entity extends JpaAnnotation implements ClassAnnotation {
 
 		return this.classDef;
 
-	}
-	
-	/**
-	 * Determines the name of the database table backing an entity.
-	 * The class name is split at every capital letter. All parts are then transformed 
-	 * to upper case and joined with an underscore character.
-	 * 
-	 * @return the name of the database table
-	 */
-	private String getEntityName() {
-		
-		// split by upper case letter
-		String[] words = classDef.getClassName().split("(?=\\p{Upper})");
-		
-		for (int i = 0; i < words.length; i++) {	
-			words[i] = words[i].toUpperCase();
-		}
-		
-		return StringUtils.join(words, "_");
-		
 	}
 
 }

@@ -89,7 +89,7 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 				throw new InvalidModelException(InvalidModelException.INVALID_TYPE,
 						"Reference has the wrong relationship type [type: "
 								+ refDef.getRelationshipType()
-								+ ", references can only be 'oneToOne' or 'manyToOne'");
+								+ "], references can only be 'oneToOne' or 'manyToOne'");
 				
 			}
 			
@@ -103,10 +103,37 @@ public class ClassDefinitionValidator implements IClassDefinitionValidator {
 				ClassDefinition listItem = projectDef.getClassDefinitionByName(typeName);
 				if (!listItem.hasReferenceToType(classDef.getClassName())) {
 					
-					throw new InvalidModelException(InvalidModelException.INVALID_TYPE,
+					throw new InvalidModelException(InvalidModelException.NO_BACK_REF,
 							classDef.getClassName() + " has a list of type " + typeName
 							+ ", but " + typeName + " does not define a reference to " 
 							+ classDef.getClassName());
+					
+				}
+				
+			}
+			
+			if (listDefinition.getRelationshipType() == RelationshipType.manyToMany) {
+				
+				String typeName = listDefinition.getType();
+				ClassDefinition listItem = projectDef.getClassDefinitionByName(typeName);
+				ListDefinition itemDefintion = listItem.getListOfType(classDef.getClassName());
+				
+				boolean currentIsOwner = listDefinition.isOwner();
+				boolean itemIsOwner = itemDefintion.isOwner();
+				
+				if (!(currentIsOwner || itemIsOwner)) {
+					
+					throw new InvalidModelException(InvalidModelException.NO_OWNER,
+							classDef.getClassName() + " and " + listItem.getClassName()
+								+ " have a many to many relationship. But no side is declared the owner of the relationship.");
+					
+				}
+				
+				if (currentIsOwner && itemIsOwner) {
+					
+					throw new InvalidModelException(InvalidModelException.TWO_OWNERS,
+							classDef.getClassName() + " and " + listItem.getClassName()
+								+ " have a many to many relationship. And both sides declare to be the owner of the relationship.");
 					
 				}
 				

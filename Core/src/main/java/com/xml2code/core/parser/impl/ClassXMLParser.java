@@ -40,12 +40,12 @@ public class ClassXMLParser implements IClassXMLParser {
 	private static final String XML_REFERENCE = "Reference";
 	private static final String XML_REFERENCE_NAME = "referenceName";
 	private static final String XML_REFERENCE_TYPE = "referenceType";
-	private static final String XML_REFERENCE_OWNER = "owner";
 	
 	private static final String XML_LIST = "List";
 	private static final String XML_LIST_NAME = "listName";
 	private static final String XML_LIST_ITEM_TYPE = "itemType";
 	
+	private static final String XML_RELATIONSHIP_OWNER = "owner";
 	private static final String XML_REQUIRED = "required";
 	
 	private static Logger LOGGER = LoggerUtil.getApplicationLogger(); 
@@ -140,7 +140,7 @@ public class ClassXMLParser implements IClassXMLParser {
 				
 				String referenceName = referenceDefElement.getAttribute(XML_REFERENCE_NAME);
 				String referenceType = referenceDefElement.getAttribute(XML_REFERENCE_TYPE);
-				boolean owner = Boolean.parseBoolean(referenceDefElement.getAttribute(XML_REFERENCE_OWNER));
+				boolean owner = Boolean.parseBoolean(referenceDefElement.getAttribute(XML_RELATIONSHIP_OWNER));
 				boolean required = Boolean.parseBoolean(referenceDefElement.getAttribute(XML_REQUIRED));
 				
 				ReferenceDefinition referenceDef = new ReferenceDefinition(referenceName, referenceType, required);
@@ -167,8 +167,10 @@ public class ClassXMLParser implements IClassXMLParser {
 				
 				String listName = listDefElement.getAttribute(XML_LIST_NAME);
 				String listItemType = listDefElement.getAttribute(XML_LIST_ITEM_TYPE);
+				boolean owner = Boolean.parseBoolean(listDefElement.getAttribute(XML_RELATIONSHIP_OWNER));
 				
 				ListDefinition listDef = new ListDefinition(listName, listItemType);
+				listDef.setOwner(owner);
 				classDef.getListDefinitions().add(listDef);
 	 
 			}	

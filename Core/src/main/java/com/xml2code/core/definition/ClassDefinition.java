@@ -246,7 +246,7 @@ public class ClassDefinition {
 	 */
 	public ListDefinition getListOfType(String typeName) {
 
-		for (ListDefinition listDef : listDefinitions) {
+		for (ListDefinition listDef : this.listDefinitions) {
 			if (listDef.getType().equals(typeName)) {
 				return listDef;
 			}

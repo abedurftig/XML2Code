@@ -158,14 +158,7 @@ public class AnnotationGenerator implements IAnnotationGenerator {
 		
 		if (listDefinition.getRelationshipType() == RelationshipType.manyToMany) {
 			
-			ProjectDefinition projectDefinition = classDefinition.getProjectDefinition();
-			
-			ClassDefinition ownedEntity = projectDefinition.getClassDefinitionByName(listDefinition.getType());
-			
-			ListDefinition backRef = ownedEntity.getListOfType(classDefinition.getClassName());
-			String mappedBy = backRef.getName();
-			
-			output.append(new ManyToMany(listDefinition).getCode());
+			output.append(new ManyToMany(listDefinition, classDefinition).getCode());
 			
 		}
 		

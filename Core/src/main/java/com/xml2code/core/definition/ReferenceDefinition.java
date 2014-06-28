@@ -34,7 +34,7 @@ public class ReferenceDefinition implements IMemberDefinition {
 	
 	/**
 	 * If this reference is part of a bidirectional relationships this flag
-	 * indicates if this the owning class is the owner in the relationship.
+	 * indicates if this the owning class in the relationship.
 	 * For example a contact has (owns) an address, but the address has
 	 * a reference to the owning contact. Every bidirectional relationship
 	 * requires an owner, otherwise the model is considered invalid. 
