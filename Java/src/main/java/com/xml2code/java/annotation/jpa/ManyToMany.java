@@ -2,9 +2,9 @@ package com.xml2code.java.annotation.jpa;
 
 import com.xml2code.core.definition.ClassDefinition;
 import com.xml2code.core.definition.ListDefinition;
-import com.xml2code.core.util.StringConstants;
 import com.xml2code.core.util.StringUtil;
 import com.xml2code.java.annotation.ListAnnotation;
+import com.xml2code.java.util.TemplateUtil;
 
 public class ManyToMany extends JpaAnnotation implements ListAnnotation {
 
@@ -15,46 +15,46 @@ public class ManyToMany extends JpaAnnotation implements ListAnnotation {
 		this.listDefinition = listDefinition;
 		this.classDefinition = classDefinition;
 	}
-	
+
 	@Override
 	public String getCode() {
-		
+
+		String template = "";
+
 		if (this.listDefinition.isOwner()) {
-			
-		    return "@ManyToMany(" + StringConstants.NEW_LINE_INDENT + StringConstants.INDENT +
-		    		"targetEntity=" + listDefinition.getType() + ".class," + StringConstants.NEW_LINE_INDENT + StringConstants.INDENT +
-		    		"cascade={CascadeType.PERSIST, CascadeType.MERGE}" + StringConstants.NEW_LINE_INDENT +
-		           ")" + StringConstants.NEW_LINE_INDENT +
-		    	   "@JoinTable(" + StringConstants.NEW_LINE_INDENT + StringConstants.INDENT +
-		           	"name=\"" + getJoinTableName() + "\", " + StringConstants.NEW_LINE_INDENT + StringConstants.INDENT + 
-		            "joinColumns=@JoinColumn(name=\"" + 
-		           	StringUtil.joinWithUnderscore(classDefinition.getClassName()) + "_ID\")," + StringConstants.NEW_LINE_INDENT + StringConstants.INDENT +
-		            "inverseJoinColumns=@JoinColumn(name=\"" + 
-		           	StringUtil.joinWithUnderscore(listDefinition.getType()) + "_ID\")" + StringConstants.NEW_LINE_INDENT +
-		           ")";
-			
-			
+
+			template = TemplateUtil.getJavaPartialManyToManyOwnerTemplate();
+			template = template.replace("{{CLASS}}", listDefinition.getType());
+			template = template.replace("{{JOIN_TABLE_NAME}}", getJoinTableName());
+			template = template.replace("{{OWNER_ID}}", StringUtil.joinWithUnderscore(classDefinition.getClassName()) + "_ID");
+			template = template.replace("{{OWNED_ID}}", StringUtil.joinWithUnderscore(listDefinition.getType()) + "_ID");
+
+			return template;
+
+
 		} else {
-		
-			return "@ManyToMany(" + StringConstants.NEW_LINE_INDENT + StringConstants.INDENT +
-					"cascade = {CascadeType.PERSIST, CascadeType.MERGE}," + StringConstants.NEW_LINE_INDENT + StringConstants.INDENT + 
-					"mappedBy = \"" + StringUtil.getPlural(this.classDefinition.getClassName()).toLowerCase() + "\"," + StringConstants.NEW_LINE_INDENT + StringConstants.INDENT + 
-					"targetEntity = " + this.listDefinition.getType() + ".class" + StringConstants.NEW_LINE_INDENT +
-           		   ")";
-			
+
+			template = TemplateUtil.getJavaPartialManyToManyOwnedTemplate();
+			template = template.replace("{{CLASS}}", listDefinition.getType());
+			template = template.replace("{{MAPPED_BY}}", StringUtil.getPlural(this.classDefinition.getClassName()).toLowerCase());
+
+			return template;
+
 		}
-		
+
 	}
 
 	public ListDefinition getListDefinition() {
 		return this.listDefinition;
 	}
-	
+
 	private String getJoinTableName() {
-		
-		String tableName = StringUtil.joinWithUnderscore(this.classDefinition.getClassName()) + "_" + StringUtil.getPlural(this.listDefinition.getType());
+
+		String tableName = StringUtil.joinWithUnderscore(this.classDefinition.getClassName()) + "_" + 
+				StringUtil.getPlural(this.listDefinition.getType());
+
 		return tableName.toUpperCase();
-		
+
 	}
 
 }

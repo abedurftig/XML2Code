@@ -1,0 +1,9 @@
+@ManyToMany(
+		targetEntity={{CLASS}}.class,
+		cascade={CascadeType.PERSIST, CascadeType.MERGE}
+	)
+	@JoinTable(
+		name="{{JOIN_TABLE_NAME}}",
+		joinColumns=@JoinColumn(name="{{OWNER_ID}}"),
+		inverseJoinColumns=@JoinColumn(name="{{OWNED_ID}}")
+	)

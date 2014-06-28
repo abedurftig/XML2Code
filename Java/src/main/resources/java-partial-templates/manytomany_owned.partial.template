@@ -1,0 +1,5 @@
+@ManyToMany(
+		cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+		mappedBy = “{{MAPPED_BY}}”,
+		targetEntity = {{CLASS}}.class
+	)
