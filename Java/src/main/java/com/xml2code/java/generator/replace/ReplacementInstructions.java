@@ -54,7 +54,17 @@ public class ReplacementInstructions {
 
 		List<ReplacementInstruction> replacementInstructions = new ArrayList<ReplacementInstruction>();
 		replacementInstructions.add(new ReplacementInstruction(Pattern.NAME, memberDefinition.getName(), true));
-		replacementInstructions.add(new ReplacementInstruction(Pattern.TYPE, memberDefinition.getType(), true));
+		
+		if (memberDefinition instanceof ListDefinition) {
+			
+			replacementInstructions.add(new ReplacementInstruction(Pattern.TYPE, "List<" + memberDefinition.getType() + ">", true));
+			
+		} else {
+		
+			replacementInstructions.add(new ReplacementInstruction(Pattern.TYPE, memberDefinition.getType(), true));
+			
+		}
+		
 		replacementInstructions.add(new ReplacementInstruction(Pattern.GETTER, NameUtil.getGetterName(memberDefinition), true));
 		replacementInstructions.add(new ReplacementInstruction(Pattern.SETTER, NameUtil.getSetterName(memberDefinition), true));
 

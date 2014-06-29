@@ -1,4 +1,4 @@
-package <<app>>.rest.impl;
+package <<app>>.rest;
 
 import java.lang.Exception;
 
@@ -16,10 +16,11 @@ import javax.ws.rs.core.Response;
 
 import org.json.JSONArray;
 
+import com.xml2code.java.shared.json.JSONUtil;
+
 import <<app>>.domain.<<class>>;
-import <<app>>.controller.impl.<<class>>Controller;
+import <<app>>.controller.<<class>>Controller;
 import <<app>>.rest.RestAPI;
-import <<app>>.util.JSONUtil;
 
 @Path("/<<instance>>")
 public class <<class>>API implements RestAPI {

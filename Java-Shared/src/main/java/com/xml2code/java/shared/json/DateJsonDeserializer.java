@@ -1,4 +1,4 @@
-package xml2code.java.shared.json;
+package com.xml2code.java.shared.json;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -10,13 +10,13 @@ import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
 
-public class DateTimeJsonDeserializer extends JsonDeserializer<Date> {
+public class DateJsonDeserializer extends JsonDeserializer<Date> {
 
 	@Override
 	public Date deserialize(JsonParser parser, DeserializationContext context)
 			throws IOException, JsonProcessingException {
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy'T'HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         try {
 			return formatter.parse(parser.getText());
 		} catch (ParseException e) {

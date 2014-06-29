@@ -26,7 +26,7 @@ public class JsonRestApiGenerator extends ClassGenerator {
 		
 		String template = TemplateUtil.getJavaJsonRestApiTemplate();
 		String rootPackage = getRootPackage(projectDefinition);
-		String contentFilePath = targetDir + "/" + "RestApi.java";
+		String contentFilePath = targetDir + "/" + "RestAPI.java";
 		
 		List<ReplacementInstruction> replacementInstructions = new ArrayList<ReplacementInstruction>();
 		replacementInstructions.add(new ReplacementInstruction(Pattern.APP, rootPackage, true));
@@ -40,7 +40,7 @@ public class JsonRestApiGenerator extends ClassGenerator {
 			throws JavaProjectCreationFailedException {
 		
 		String template = TemplateUtil.getJavaJsonRestApiImplTemplate();
-		String contentFilePath = targetDir + "/" + classDefinition.getClassName() + "Api.java";
+		String contentFilePath = targetDir + "/" + classDefinition.getClassName() + "API.java";
 		
 		List<ReplacementInstruction> replacementInstructions = new ArrayList<ReplacementInstruction>();
 		replacementInstructions.add(new ReplacementInstruction(Pattern.APP, rootPackage, true));

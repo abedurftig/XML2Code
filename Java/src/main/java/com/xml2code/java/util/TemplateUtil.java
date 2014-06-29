@@ -26,8 +26,8 @@ public final class TemplateUtil {
 	private static final String JAVA_DOMAIN_OBJECT_IMPL_INIT_LIST = 	JAVA_P_PATH + "initlist.partial.template";
 	private static final String JAVA_DOMAIN_OBJECT_IMPL_CONSTRUCTOR = 	JAVA_P_PATH + "constructor.partial.template";
 
-	private static final String JAVA_ANNOTATION_M2M_OWNER = JAVA_P_PATH + "manytomany_owner.partial.template";
-	private static final String JAVA_ANNOTATION_M2M_OWNED = JAVA_P_PATH + "manytomany_owned.partial.template";
+	private static final String JAVA_ANNOTATION_M2M_OWNER = JAVA_P_PATH + "manytomany.owner.partial.template";
+	private static final String JAVA_ANNOTATION_M2M_OWNED = JAVA_P_PATH + "manytomany.owned.partial.template";
 
 	private static final String RESRC_WEB_XML = 		  RESRC_XML_PATH + "web.xml.resrc";
 	private static final String RESRC_HIBERNATE_CFG_XML = RESRC_XML_PATH + "hibernate.cfg.xml.resrc";

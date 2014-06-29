@@ -41,6 +41,13 @@ public class ModelFinalizer {
 			refDef.setUnidirectional(!hasReference);
 			
 			boolean manyToOne = ownedClass.hasListOfType(className);
+			
+			if (!hasReference && !manyToOne) {
+				
+				refDef.setOwner(true);
+				
+			}
+			
 			if (manyToOne) {
 				
 				refDef.setRelationshipType(RelationshipType.manyToOne);

@@ -1,4 +1,4 @@
-package xml2code.java.shared.hibernate;
+package com.xml2code.java.shared.hibernate;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

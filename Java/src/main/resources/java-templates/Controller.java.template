@@ -1,7 +1,7 @@
 package <<app>>.controller;
 
-import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -11,8 +11,8 @@ import org.hibernate.criterion.Projections;
 
 import <<app>>.domain.DomainObject;
 
-import xml2code.java.shared.reflection.ReflectionUtil;
-import xml2code.java.shared.hibernate.util.HibernateUtil;
+import com.xml2code.java.shared.reflection.ReflectionUtil;
+import com.xml2code.java.shared.hibernate.HibernateUtil;
 
 public abstract class DomainObjectController<T extends DomainObject> {
 

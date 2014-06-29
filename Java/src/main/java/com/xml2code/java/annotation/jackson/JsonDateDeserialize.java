@@ -26,12 +26,12 @@ public class JsonDateDeserialize extends JacksonAnnotation implements
 
 		if (this.fieldDefinition.getFieldType() == FieldType.date) {
 			
-			return "@JsonSerialize(using = DateJsonDeserializer.class)";
+			return "@JsonDeserialize(using = DateJsonDeserializer.class)";
 
 			
 		} else if (this.fieldDefinition.getFieldType() == FieldType.datetime) {
 			
-			return "@JsonSerialize(using = DateTimeJsonDeserializer.class)";
+			return "@JsonDeserialize(using = DateTimeJsonDeserializer.class)";
 
 			
 		} else {

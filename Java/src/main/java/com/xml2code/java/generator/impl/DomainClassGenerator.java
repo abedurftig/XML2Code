@@ -17,16 +17,21 @@ import com.xml2code.core.exception.UnsupportedFieldTypeException;
 import com.xml2code.core.generator.ReplacementInstruction;
 import com.xml2code.core.generator.Replacer;
 import com.xml2code.core.util.StringConstants;
+import com.xml2code.java.annotation.Annotation;
+import com.xml2code.java.annotation.jackson.JsonIgnore;
 import com.xml2code.java.exception.JavaProjectCreationFailedException;
 import com.xml2code.java.factory.GeneratorFactory;
 import com.xml2code.java.generator.ClassGenerator;
 import com.xml2code.java.generator.IAnnotationGenerator;
 import com.xml2code.java.generator.pattern.Pattern;
 import com.xml2code.java.generator.replace.ReplacementInstructions;
+import com.xml2code.java.util.AnnotationUtil;
 import com.xml2code.java.util.TemplateUtil;
 
 public class DomainClassGenerator extends ClassGenerator {
 
+	private Map<String, Set<Annotation>> annotationsMap = new HashMap<String, Set<Annotation>>();
+	
 	@Override
 	public void generateBaseClass(ProjectDefinition projectDefinition, String targetDir) 
 			throws JavaProjectCreationFailedException {
@@ -44,18 +49,20 @@ public class DomainClassGenerator extends ClassGenerator {
 	@Override
 	protected void generateImplementationClass(ClassDefinition classDefinition, String targetDir, String rootPackage)
 			throws JavaProjectCreationFailedException {
-
+		
+		Set<Annotation> annotationsUsed = getAnnotationSet(classDefinition);
+		
 		try {
 
 			String template = TemplateUtil.getJavaDomainObjectImplTemplate();
 			String domainPackage = rootPackage + ".domain";
 			String contentFilePath = targetDir + "/" + classDefinition.getClassName() + ".java";
 
-			String importStatements = generateImports(classDefinition.getProjectDefinition().getInstructions(), classDefinition);
-			String annotations = generateClassAnnotations(classDefinition);
+			String annotations = generateClassAnnotations(classDefinition, annotationsUsed);
 			String fields = generateFields(classDefinition);
 			String references = generateReferences(classDefinition);
 			String lists = generateLists(classDefinition);
+			String importStatements = generateImports(classDefinition.getProjectDefinition().getInstructions(), classDefinition);
 			String constructor = generateConstructor(classDefinition);
 			String gettersAndSetters = generateGettersAndSetters(classDefinition);
 
@@ -89,10 +96,10 @@ public class DomainClassGenerator extends ClassGenerator {
 
 	}
 
-	protected String generateClassAnnotations(ClassDefinition classDefinition) {
+	protected String generateClassAnnotations(ClassDefinition classDefinition, Set<Annotation> annotationsUsed) {
 
 		IAnnotationGenerator annotationGenerator = GeneratorFactory.getAnnotationGenerator();
-		return annotationGenerator.getClassAnnotations(classDefinition);
+		return annotationGenerator.getClassAnnotations(classDefinition, annotationsUsed);
 
 	}
 
@@ -164,7 +171,8 @@ public class DomainClassGenerator extends ClassGenerator {
 	protected String generateMembers(ClassDefinition classDefinition, List<? extends IMemberDefinition> members, String template) {
 
 		IAnnotationGenerator annotationGenerator = GeneratorFactory.getAnnotationGenerator();
-
+		Set<Annotation> annotationsUsed = getAnnotationSet(classDefinition);
+		
 		StringBuffer output = new StringBuffer();
 
 		IMemberDefinition memberDefinition = null;
@@ -177,7 +185,7 @@ public class DomainClassGenerator extends ClassGenerator {
 
 			memberDefinition = iterator.next();
 			code = template;
-			annotations = annotationGenerator.getMemberAnnotations(memberDefinition, classDefinition);
+			annotations = annotationGenerator.getMemberAnnotations(memberDefinition, classDefinition, annotationsUsed);
 			replacementInstructions = ReplacementInstructions.getMemberInstructions(memberDefinition, annotations);
 			code = Replacer.replace(code, replacementInstructions);
 			output.append(code);
@@ -211,6 +219,8 @@ public class DomainClassGenerator extends ClassGenerator {
 	private List<String> getRequiredImportStatements(InstructionsDefinition instructionsDefinition,
 			ClassDefinition classDefinition) {
 
+		Set<Annotation> annotationsUsed = getAnnotationSet(classDefinition);
+		
 		Map<String, Set<String>> importStatements = new HashMap<String, Set<String>>();
 		Set<String> javaUtil = getImportsForPackage(importStatements, "java.util");
 		Set<String> javaShared = getImportsForPackage(importStatements, "com.xml2code.java.shared");
@@ -268,6 +278,12 @@ public class DomainClassGenerator extends ClassGenerator {
 			javax.add("import javax.persistence.*;");
 
 		}
+		
+		if (AnnotationUtil.containsAnnotationClass(JsonIgnore.class, annotationsUsed)) {
+			
+			jackson.add("import org.codehaus.jackson.annotate.JsonIgnore;");
+			
+		}
 
 		List<String> imports = new ArrayList<String>();
 		Iterator<Set<String>> iterator = importStatements.values().iterator();
@@ -306,6 +322,26 @@ public class DomainClassGenerator extends ClassGenerator {
 
 		return packImports;
 
+	}
+	
+	private Set<Annotation> getAnnotationSet(ClassDefinition classDefinition) {
+	
+		String className = classDefinition.getClassName();
+		Set<Annotation> annotationsUsedInClass = null;
+		
+		if (this.annotationsMap.containsKey(className)) {
+			
+			annotationsUsedInClass = this.annotationsMap.get(className);
+					
+		} else {
+			
+			annotationsUsedInClass = new HashSet<Annotation>();
+			this.annotationsMap.put(className, annotationsUsedInClass);
+			
+		}
+		
+		return annotationsUsedInClass;
+		
 	}
 
 }
